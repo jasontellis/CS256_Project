@@ -1,0 +1,44 @@
+\documentclass[11pt, a4paper, twocolumn]{article}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{0.8\baselineskip}{\baselineskip}
+\usepackage{xcolor}
+\usepackage{lipsum}
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.0} 
+\title{An Intelligent Social Oriented Photographer for Personalized Photo Enhancement }
+\author{Ling Ouyang, Jason Tellis, Mugdha Jain	
+%make sure to specify if the project is Programming or %Technology Driven
+\thanks{CS256 Section 2 Fall 2017: Programming Driven Project}}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+An intelligent photographer agent that incorporates both users' personal preference and feedback based on their social circle is developed for personalized photo enhancement in this project. Unlike most traditional image enhancement techniques that mainly rely on heuristic algorithms with some static or probabilistic parameters, our agent would make use of the latent aesthetic preferences of users along with their past images on the social network to improve the photos' image quality and style in a manner that is ‘customized’ to each individual user rather than a one size fits all approach. Our model would be trained with inputting user-clicked pictures and user provided labels such as "liked", "disliked", "average" and then the agent would apply what it learns from the training dataset to improve user's photos such that the image quality and style would be tailored to fit user's personal flavors.     
+ To evaluate performance, users will be given a blind test to decide which image they like more between the photographer agent-enhanced one and a photo enhanced using Photoshop/other commercial photo editors.\end{abstract}
+
+\section{Introduction}
+
+Taking and sharing photos has become an indispensable part of our lives. This is how we communicate our lifestyle and emotions in this era of being connected to everyone through our mobile devices. Hence, photo enhancement plays an important role since everyone wants to make sure they look their best and get the most attention from their social circle. In our project, we are interested in discovering how intuitive human aesthetic semantics could be modeled to enhance images instead of just relying on heuristic/probabilistic approaches.  
+
+A couple of recent research efforts have been put to investigate how human aesthetics can be learned to improve photo quality. Google researcher \cite{DBLP:journals/corr/FangZ17} recently introduced a photo editing system called Creatism in which a landscape photographer workflow is mimicked to produce some enhanced photos. Another group \cite{DBLP:journals/corr/ChenKSCM17} exploited the professional photographs from web to train their aesthetics model by examining pairs of views without having to applying any explicitly photographic rules. In contrast to these professional photo based methods, 
+our proposed approach would make use of non-professional photo databases either created by average users or from their social network. In this case our agent will learn from the user’s personal preferences and use the knowledge to enhance the users' new images.
+\section{Materials and Methods}
+
+\subsection{Environment}
+Our agent would operate on a set of images captured by users under various lighting conditions(sunny daylight, twilight, night ), scene types(portrait, landscape) and locations(indoor and outdoor). 
+\subsection{Sensor} 
+A series of pre-processing steps such as cropping, scaling as well some feature extraction would be performed to retrieve meaningful information so that our agent can perceive them and thus learn how a "good" photo should look like.\subsection{Percepts}
+Important features of our captured images include both typical objective image quality attributes such as color, contrast, brightness, face characteristics as well as subjective human aesthetics such as liked/dislike, cute/boring and so on.  
+\subsection{Actuators}
+Our personalized photo agent would predict how to enhance the user’s image based on the model developed specifically for that particular user and improve the photos accordingly. 
+\subsection{Performance Measures}
+Our evaluation consists of two performance measures: 1. Comparison between  agent enhanced photos and original  captured ones  2. Comparison between agent enhanced ones and professional tool(e.g. photoshop) enhanced ones.  The more "better" photos coming from the agent enhanced ones in above two cases, the better the agent's performance is.
+
+\section{Experiments}
+Two type of datasets would be used in our experiment. The first one would be created by users themselves using smartphone camera including both training set and test set. All training set would be then labeled "liked", "disliked" and "average" by human users. The second one would be downloaded from users or users' friends/family members(with their permission)' social media website accounts such as Facebook/Instagram together with the the corresponding social tag on such photos. To evaluate agent's performance,  a small group of human users would be given a blind test to compare the agent enhanced ones with original photos as well the professional enhanced ones. If in both cases, more than 50\% of the agent enhanced photos are considered better than the original captures or professional tool enhanced ones, then we would conclude that the intelligent photographer agent has a reasonable good performance.  
+
+\bibliography{CS256-Section2-Project} 
+\bibliographystyle{ieeetr}
+\end{document}
