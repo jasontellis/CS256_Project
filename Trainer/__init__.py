@@ -1,2 +1,4 @@
-from AbstractImageClassifier import AbstractImageClassifier
-from SVMImageClassifier import SVMImageClassifier
+from AbstractTrainer import AbstractTrainer
+from KNNTrainer import KNNTrainer
+from RandomForestTrainer import RandomForestTrainer
+from SVMTrainer import SVMTrainer

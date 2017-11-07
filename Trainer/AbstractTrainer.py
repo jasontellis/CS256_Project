@@ -1,16 +1,25 @@
 class AbstractTrainer:
+	"""
+	Takes list of image vectors & associated labels as input & returns
+	trained model as output
+	"""
 
-	def __init__(self, imageDirectory):
-		self.dataCount = 0
-		self.imageDirectory = imageDirectory
-		self.labels = []
-		self.model = None
+	def __init__(self, imageVectorList, imageLabelList):
+		"""
 
-	def getLabels(self):
+		:param imageVectorList: List of Image Vectors
+		:param imageLabelList: List of labels associated with list of image vectors
 		"""
-		Returns List of Binary Labels from Image Directory
-		:return:
-		"""
+		self.__validate__(imageVectorList,imageLabelList)
+		self.buildModel()
+
+	def __validate__(self, imageVectorList, imageLabelList):
+		if len(imageLabelList) != len(imageVectorList):
+			raise ValueError("Count of vectors and count of labels do not match")
+		if not len(imageVectorList):
+			raise ValueError("Data not provided for imageVectorList")
+		if not len(imageLabelList):
+			raise ValueError("Data not provided for imageLabelList")
 
 	def getModel(self):
 		"""
@@ -18,3 +27,6 @@ class AbstractTrainer:
 		:return:
 		"""
 		return self.model
+
+	def buildModel(self):
+		pass

@@ -2,10 +2,11 @@ from sklearn.svm import SVC
 from AbstractTrainer import AbstractTrainer
 class SVMTrainer(AbstractTrainer):
 
-	def __init__(self):
-		self.svmModel = None
+	def __init__(self, imageVectorList, imageLabelList):
+		"""
 
-	def getModel(self):
-		self.svmModel = SVC()
-		self.svmModel.fit()
-		classLabel = self.svmModel.predict(imageVector)
+		:param imageVectorList:
+		:param imageLabelList:
+		"""
+		self.model = SVC(kernel = 'linear')
+		self.model.fit(imageVectorList,imageLabelList)

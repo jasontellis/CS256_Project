@@ -1,3 +1,2 @@
 class Constants:
-	imageClass = {0: "Bad", 1: "Good"}
-
+	CLASS_LABELS = {"0": "bad", "1": "good"}
