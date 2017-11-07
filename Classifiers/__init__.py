@@ -1,2 +1,0 @@
-from ImageClassifier import ImageClassifier
-from SVMImageClassifier import SVMImageClassifier
