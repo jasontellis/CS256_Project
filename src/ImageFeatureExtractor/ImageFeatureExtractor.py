@@ -21,11 +21,14 @@ class ImageFeatureExtractor:
 
     def initialize(self):
         if not os.path.isfile(self.inputimagefile):
-            self.quit("Input image file doesn't exist or it's not a file")
+            print("Input image file doesn't exist or it's not a file")
+            sys.exit(2)
         if not os.path.isfile(self.inputfacecascxml):
-            self.quit("Input face haarcascade xml doesn't exist or it's not a file")
+            print("Input face haarcascade xml doesn't exist or it's not a file")
+            sys.exit(2)
         if not os.path.isfile(self.inputeyecasxml):
-            self.quit("Input eye haarcascade xml doesn't exist or it's not a file")
+            print("Input eye haarcascade xml doesn't exist or it's not a file")
+            sys.exit(2)
 
     def extract_img_feataure(self):
         face_hue = []
@@ -93,9 +96,9 @@ class ImageFeatureExtractor:
 """                                                                              """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if __name__ == '__main__':
-    testimage = '/Users/lingouyang/GoogleDrive/sjsu/CS256/cs256_Project/AtlanticCity.jpg'
-    face_hcxml = '/Users/lingouyang/GoogleDrive/sjsu/CS256/cs256_Project/haarcascade_frontalface_default.xml'
-    eye_hcxml = '/Users/lingouyang/GoogleDrive/sjsu/CS256/cs256_Project/haarcascade_eye.xml'
+    testimage = '/Users/lingouyang/GoogleDrive/sjsu/CS256/CS256_Project/CS256_Project/AtlanticCity.jpg'
+    face_hcxml = '/Users/lingouyang/GoogleDrive/sjsu/CS256/CS256_Project/CS256_Project/haarcascade_frontalface_default.xml'
+    eye_hcxml = '/Users/lingouyang/GoogleDrive/sjsu/CS256/CS256_Project/CS256_Project/haarcascade_eye.xml'
     im_extractor = ImageFeatureExtractor(testimage, face_hcxml, eye_hcxml)
     im_extractor.initialize()
     im_extractor.extract_img_feataure()
