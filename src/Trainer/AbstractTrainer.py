@@ -1,19 +1,23 @@
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+
 class AbstractTrainer:
 	"""
 	Takes list of image vectors & associated labels as input & returns
 	trained model as output
 	"""
 
-	def __init__(self, imageVectorList, imageLabelList):
+	def __init__(self, parameter = None):
 		"""
 
-		:param imageVectorList: List of Image Vectors
-		:param imageLabelList: List of labels associated with list of image vectors
+		:param parameter:
 		"""
+		self.name = ""
+		self.parameter = parameter
 		self.model = None
-		pass
-		self.__validate__(imageVectorList, imageLabelList)
-		self.buildModel()
 
 	def __validate__(self, imageVectorList, imageLabelList):
 		if len(imageLabelList) != len(imageVectorList):
@@ -30,5 +34,14 @@ class AbstractTrainer:
 		"""
 		return self.model
 
-	def buildModel(self):
-		pass
+	def buildModel(self, imageVectorList, imageLabelList):
+		"""
+		Build the model using classifier
+
+		:param imageVectorList:
+		:param imageLabelList:
+		:return:
+		"""
+		self.__validate__(imageVectorList, imageLabelList)
+		self.model.fit(imageVectorList, imageLabelList)
+		return self.model

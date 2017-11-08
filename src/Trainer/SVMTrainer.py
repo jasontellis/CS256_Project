@@ -4,12 +4,11 @@ from AbstractTrainer import AbstractTrainer
 
 
 class SVMTrainer(AbstractTrainer):
-	def __init__(self, imageVectorList, imageLabelList):
+	def __init__(self, parameter):
 		"""
 
-		:param imageVectorList:
-		:param imageLabelList:
+		:param parameter:
 		"""
-		super.__init__(imageVectorList, imageLabelList)
+		AbstractTrainer.__init__(self, parameter)
+		self.name = "Support Vector Machine Classifier"
 		self.model = SVC(kernel = 'linear')
-		self.model.fit(imageVectorList, imageLabelList)
