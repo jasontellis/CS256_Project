@@ -4,6 +4,7 @@ from Trainer.RandomForestTrainer import RandomForestTrainer
 from Trainer.SVMTrainer import SVMTrainer
 from Trainer.TrainingFileReader import TrainingFileReader
 from Validators.CrossValidator import CrossValidator
+import itertools
 
 
 class Main:
@@ -30,6 +31,11 @@ class Main:
 
 		for classifier in classifiers:
 			classifier.buildModel(imageVectorList, imageLabelList)
+			predictions = CrossValidator(classifier, imageVectorList, imageLabelList).getPredictions()
+			print (len(predictions), len(imageLabelList))
+			for actualClass, predictedClass in itertools.izip(imageLabelList, predictions):
+				print actualClass, "->", predictedClass
+
 			CrossValidator(classifier, imageVectorList, imageLabelList).printAccuracy()
 
 

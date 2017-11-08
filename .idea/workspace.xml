@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dcae7b50-b52a-498e-88b8-074e06f729b4" name="Default" comment="Relative paths in IFE">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/data/training/1ling/Dance.JPG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/data/training/ling/1DSC_0019.JPG" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/AtlanticCity.jpg" afterPath="$PROJECT_DIR$/src/ImageFeatureExtractor/AtlanticCity.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/haarcascade_eye.xml" afterPath="$PROJECT_DIR$/src/ImageFeatureExtractor/xml/haarcascade_eye.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/haarcascade_frontalface_default.xml" afterPath="$PROJECT_DIR$/src/ImageFeatureExtractor/xml/haarcascade_frontalface_default.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/data/training/ling/0/NoFaceDance.JPG" afterPath="$PROJECT_DIR$/src/data/training/ling/0/0NoFaceDance.JPG" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/data/training/ling/0/TooSmallPeople.JPG" afterPath="$PROJECT_DIR$/src/data/training/ling/0/0TooSmallPeople.JPG" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/data/training/ling/1/007.JPG" afterPath="$PROJECT_DIR$/src/data/training/ling/0/007.JPG" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/data/training/ling/1/History.JPG" afterPath="$PROJECT_DIR$/src/data/training/ling/1/1History.JPG" />
+    <list default="true" id="dcae7b50-b52a-498e-88b8-074e06f729b4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ImageFeatureExtractor/ImageFeatureExtractor.py" afterPath="$PROJECT_DIR$/src/ImageFeatureExtractor/ImageFeatureExtractor.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.py" afterPath="$PROJECT_DIR$/src/Main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Trainer/TrainingFileReader.py" afterPath="$PROJECT_DIR$/src/Trainer/TrainingFileReader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Validators/CrossValidator.py" afterPath="$PROJECT_DIR$/src/Validators/CrossValidator.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,14 +15,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+            <state relative-caret-position="261">
+              <caret line="36" column="55" lean-forward="false" selection-start-line="36" selection-start-column="55" selection-end-line="36" selection-end-column="55" />
               <folding>
                 <element signature="e#0#55#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CrossValidator.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Validators/CrossValidator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="15" column="116" lean-forward="false" selection-start-line="15" selection-start-column="116" selection-end-line="15" selection-end-column="116" />
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_validation.py" pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/sklearn/model_selection/_validation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1054">
+              <caret line="570" column="4" lean-forward="false" selection-start-line="570" selection-start-column="4" selection-end-line="570" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -61,10 +73,8 @@
         <entry file="file://$PROJECT_DIR$/src/ImageFeatureExtractor/ImageFeatureExtractor.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="281">
-              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+              <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -153,10 +163,10 @@
         <option value="$PROJECT_DIR$/src/Trainer/RandomForestTrainer.py" />
         <option value="$PROJECT_DIR$/src/Trainer/SVMTrainer.py" />
         <option value="$PROJECT_DIR$/src/Trainer/KNNTrainer.py" />
-        <option value="$PROJECT_DIR$/src/Validators/CrossValidator.py" />
         <option value="$PROJECT_DIR$/src/Trainer/TrainingFileReader.py" />
         <option value="$PROJECT_DIR$/src/ImageFeatureExtractor/ImageFeatureExtractor.py" />
         <option value="$PROJECT_DIR$/src/Main.py" />
+        <option value="$PROJECT_DIR$/src/Validators/CrossValidator.py" />
       </list>
     </option>
   </component>
@@ -211,7 +221,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
               <item name="training" type="462c0819:PsiDirectoryNode" />
-              <item name="ling" type="462c0819:PsiDirectoryNode" />
+              <item name="jason" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CS256_Project" type="b2602c69:ProjectViewProjectNode" />
@@ -219,17 +229,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
               <item name="training" type="462c0819:PsiDirectoryNode" />
-              <item name="ling" type="462c0819:PsiDirectoryNode" />
-              <item name="0" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CS256_Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CS256_Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="training" type="462c0819:PsiDirectoryNode" />
-              <item name="ling" type="462c0819:PsiDirectoryNode" />
-              <item name="1" type="462c0819:PsiDirectoryNode" />
+              <item name="mugdha" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CS256_Project" type="b2602c69:ProjectViewProjectNode" />
@@ -372,9 +372,9 @@
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.Main" />
-        <item index="1" class="java.lang.String" itemvalue="Python.ImageFeatureExtractor" />
-        <item index="2" class="java.lang.String" itemvalue="Python.TrainingFileReader" />
-        <item index="3" class="java.lang.String" itemvalue="Python.CrossValidator" />
+        <item index="1" class="java.lang.String" itemvalue="Python.CrossValidator" />
+        <item index="2" class="java.lang.String" itemvalue="Python.ImageFeatureExtractor" />
+        <item index="3" class="java.lang.String" itemvalue="Python.TrainingFileReader" />
         <item index="4" class="java.lang.String" itemvalue="Python.KNNTrainer" />
       </list>
     </recent_temporary>
@@ -453,7 +453,21 @@
       <option name="project" value="LOCAL" />
       <updated>1510162160100</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Working Version of Pipeline">
+      <created>1510179933654</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1510179933654</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Dir for Jason &amp; Mugdha">
+      <created>1510180051388</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1510180051388</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -527,7 +541,9 @@
     <MESSAGE value="JT: Commit1" />
     <MESSAGE value="JT: Commit2" />
     <MESSAGE value="Relative paths in IFE" />
-    <option name="LAST_COMMIT_MESSAGE" value="Relative paths in IFE" />
+    <MESSAGE value="Working Version of Pipeline" />
+    <MESSAGE value="Dir for Jason &amp; Mugdha" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dir for Jason &amp; Mugdha" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -537,8 +553,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/ImageFeatureExtractor/ImageFeatureExtractor.py</url>
-          <line>93</line>
+          <line>91</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/Validators/CrossValidator.py</url>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/Validators/CrossValidator.py</url>
+          <line>1</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -548,7 +573,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="10" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -567,9 +592,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1045">
           <caret line="55" column="68" lean-forward="false" selection-start-line="55" selection-start-column="68" selection-end-line="55" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -716,13 +739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/sklearn/model_selection/_validation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="334" column="0" lean-forward="false" selection-start-line="334" selection-start-column="0" selection-end-line="334" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Trainer/RandomForestTrainer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -734,13 +750,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="12" column="36" lean-forward="false" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Validators/CrossValidator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="18" column="28" lean-forward="false" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -845,10 +854,8 @@
     <entry file="file://$PROJECT_DIR$/src/ImageFeatureExtractor/ImageFeatureExtractor.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
-          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -868,12 +875,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/sklearn/model_selection/_validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1054">
+          <caret line="570" column="4" lean-forward="false" selection-start-line="570" selection-start-column="4" selection-end-line="570" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+        <state relative-caret-position="261">
+          <caret line="36" column="55" lean-forward="false" selection-start-line="36" selection-start-column="55" selection-end-line="36" selection-end-column="55" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Validators/CrossValidator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="15" column="116" lean-forward="false" selection-start-line="15" selection-start-column="116" selection-end-line="15" selection-end-column="116" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
