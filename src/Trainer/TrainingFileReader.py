@@ -16,13 +16,15 @@ class TrainingFileReader:
 		"""
 		labelledFileList = []
 		for label in Constants.CLASS_LABELS:
-
+			directory = os.path.abspath(directory)
 			labelledDirectory = os.path.join(directory, label)
+
 			if not os.path.isdir(labelledDirectory):
 				raise ValueError("No directory found with label %s" % label)
 			for file in os.listdir(labelledDirectory):
 				fileName = os.path.join(labelledDirectory, file)
-				if os.path.isfile(fileName):
+
+				if os.path.isfile(fileName) and (fileName.lower().endswith('jpg') or fileName.lower().endswith('jpeg')):
 					labelledFileList.append((fileName, label))
 
 		return labelledFileList
