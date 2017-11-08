@@ -1,25 +1,19 @@
-from PIL import Image, ImageStat
-import re # Regular expressions
-from time import sleep,ctime # To prevent overwhelming the server between connections
-from collections import Counter # Keep track of our term counts
-import sys, getopt, glob
 import os
+import sys
+
 import cv2
-from datetime import datetime, timedelta
 import numpy as np
-from numpy.linalg import norm
-import signal
-import random
 
 
 class ImageFeatureExtractor:
     def __init__(self, imageFileName, facecascxml_path, eyecascxml_path):
         self.feature_vector = []
         self.inputimagefile = imageFileName
-        self.inputfacecascxml = facecascxml_path
-        self.inputeyecasxml = eyecascxml_path
+        self.inputfacecascxml = os.path.abspath(facecascxml_path)
+        self.inputeyecasxml = os.path.abspath(eyecascxml_path)
 
     def initialize(self):
+
         if not os.path.isfile(self.inputimagefile):
             print("Input image file doesn't exist or it's not a file")
             sys.exit(2)
@@ -57,6 +51,7 @@ class ImageFeatureExtractor:
         img_weight, img_height = gray.shape
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
         face_num = len(faces)
+        img_face_ratio = 0.0
         print "Found {0} faces!".format(len(faces))
 
         # Draw a rectangle around the faces
@@ -96,12 +91,11 @@ class ImageFeatureExtractor:
 """                                                                              """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if __name__ == '__main__':
-    testimage = '/Users/lingouyang/GoogleDrive/sjsu/CS256/CS256_Project/CS256_Project/AtlanticCity.jpg'
-    face_hcxml = '/Users/lingouyang/GoogleDrive/sjsu/CS256/CS256_Project/CS256_Project/haarcascade_frontalface_default.xml'
-    eye_hcxml = '/Users/lingouyang/GoogleDrive/sjsu/CS256/CS256_Project/CS256_Project/haarcascade_eye.xml'
+	testimage = './AtlanticCity.jpg'
+	face_hcxml = './xml/haarcascade_frontalface_default.xml'
+	eye_hcxml = './xml//haarcascade_eye.xml'
     im_extractor = ImageFeatureExtractor(testimage, face_hcxml, eye_hcxml)
     im_extractor.initialize()
     im_extractor.extract_img_feataure()
     print im_extractor.feature_vector
-
 
