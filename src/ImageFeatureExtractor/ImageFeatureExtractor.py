@@ -90,7 +90,6 @@ class ImageFeatureExtractor:
 			img_face_worstSNR = np.amin(face_SNR)
 			img_face_ratio = np.average(face_ratio)
 
-		print img, img_eye_signal
 		self.feature_vector = [face_num, img_face_brightness, img_face_hue, img_face_ratio, img_face_worstSNR,
 		                       img_eye_signal, img_contrast, img_sharpness]
 		return self.feature_vector

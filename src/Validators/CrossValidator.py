@@ -1,7 +1,6 @@
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_val_predict
 
-
 class CrossValidator:
 	def __init__(self, classifier, imageVectorList, imageClassLabel, foldCount = 3):
 		"""
@@ -21,7 +20,8 @@ class CrossValidator:
 		return self.predictions
 
 	def printAccuracy(self):
-		print ("Accuracy of %s: %f" % (self.classifierName, self.accuracy))
+		print ("\nAccuracy of %s: %.4f" % (self.classifierName, self.accuracy))
+		print ("***********************************************************")
 
 	def getAccuracy(self):
 		return self.accuracy

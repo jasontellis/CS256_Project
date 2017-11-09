@@ -4,6 +4,7 @@ from Trainer.RandomForestTrainer import RandomForestTrainer
 from Trainer.SVMTrainer import SVMTrainer
 from Trainer.TrainingFileReader import TrainingFileReader
 from Validators.CrossValidator import CrossValidator
+from sklearn.metrics import confusion_matrix
 import itertools
 
 
@@ -20,22 +21,20 @@ class Main:
 		directory = "./data/training/ling"
 		trainingFiles = TrainingFileReader.getFileList(directory)
 		for (trainingFile, label) in trainingFiles:
-			print trainingFile
 			imageVector = ImageFeatureExtractor(trainingFile,
 			                                    './ImageFeatureExtractor/xml/haarcascade_frontalface_default.xml',
 			                                    './ImageFeatureExtractor/xml/haarcascade_eye.xml').extract()
 			imageVectorList.append(imageVector)
 			imageLabelList.append(label)
-		print imageVectorList
-		print imageLabelList
 
 		for classifier in classifiers:
 			classifier.buildModel(imageVectorList, imageLabelList)
 			predictions = CrossValidator(classifier, imageVectorList, imageLabelList).getPredictions()
-			print (len(predictions), len(imageLabelList))
-			for actualClass, predictedClass in itertools.izip(imageLabelList, predictions):
-				print actualClass, "->", predictedClass
-
+			tn, fp, fn, tp = confusion_matrix(imageLabelList, predictions).ravel()
+			print ("Confusion Matrix for %s" %classifier.name)
+			print ("\tGood\tBad")
+			print("Good %i\t\t%i" %(tp, fn))
+			print("Bad  %i\t\t%i" % (fp, tn))
 			CrossValidator(classifier, imageVectorList, imageLabelList).printAccuracy()
 
 
