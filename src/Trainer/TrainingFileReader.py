@@ -3,11 +3,13 @@ import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import Constants.Constants as Constants
+from ImageFeatureExtractor import ImageFeatureExtractor
 
 
 class TrainingFileReader:
+
 	@staticmethod
-	def getFileList(directory):
+	def __getFileList__(directory):
 		"""
 		Returns list of images in a training directory with associated label
 
@@ -29,6 +31,23 @@ class TrainingFileReader:
 
 		return labelledFileList
 
+	@staticmethod
+	def extractTrainingData(directory):
+		"""
+		Returns a list of image vectors and list of associated labels
+		:return:
+		"""
+		imageVectorList = []
+		imageLabelList = []
+		trainingFiles = TrainingFileReader.__getFileList__(directory)
+		for (trainingFile, label) in trainingFiles:
+			imageVector = ImageFeatureExtractor(trainingFile,
+			                                    './ImageFeatureExtractor/xml/haarcascade_frontalface_default.xml',
+			                                    './ImageFeatureExtractor/xml/haarcascade_eye.xml').extract()
+			imageVectorList.append(imageVector)
+			imageLabelList.append(label)
+		return imageVectorList, imageLabelList
+
 
 if __name__ == '__main__':
-	print TrainingFileReader.getFileList('../data/training/ling/')
+	print TrainingFileReader.__getFileList__('../data/training/ling/')

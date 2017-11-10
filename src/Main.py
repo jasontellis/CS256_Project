@@ -1,11 +1,10 @@
-from ImageFeatureExtractor import ImageFeatureExtractor
+from sklearn.metrics import confusion_matrix
+
 from Trainer.KNNTrainer import KNNTrainer
 from Trainer.RandomForestTrainer import RandomForestTrainer
 from Trainer.SVMTrainer import SVMTrainer
 from Trainer.TrainingFileReader import TrainingFileReader
 from Validators.CrossValidator import CrossValidator
-from sklearn.metrics import confusion_matrix
-import itertools
 
 
 class Main:
@@ -19,13 +18,8 @@ class Main:
 
 		# directory = raw_input("Please enter training directory containing labelled images: ")
 		directory = "./data/training/ling"
-		trainingFiles = TrainingFileReader.getFileList(directory)
-		for (trainingFile, label) in trainingFiles:
-			imageVector = ImageFeatureExtractor(trainingFile,
-			                                    './ImageFeatureExtractor/xml/haarcascade_frontalface_default.xml',
-			                                    './ImageFeatureExtractor/xml/haarcascade_eye.xml').extract()
-			imageVectorList.append(imageVector)
-			imageLabelList.append(label)
+
+		imageVectorList, imageLabelList = TrainingFileReader.extractTrainingData(directory)
 
 		for classifier in classifiers:
 			classifier.buildModel(imageVectorList, imageLabelList)

@@ -6,7 +6,10 @@ import numpy as np
 
 
 class ImageFeatureExtractor:
+	FEATURE_LABELS = ["Face Count", "Facial Brightness", "Facial Hue", "Relative Size of Facial Region",
+	                  "Facial Signal to Noise Ratio", "Eye Signal", "Contrast", "Sharpness"]
 	def __init__(self, imageFileName, facecascxml_path, eyecascxml_path):
+
 		self.feature_vector = []
 		self.inputimagefile = imageFileName
 		self.inputfacecascxml = os.path.abspath(facecascxml_path)
