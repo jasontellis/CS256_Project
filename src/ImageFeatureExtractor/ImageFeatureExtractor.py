@@ -6,8 +6,11 @@ import numpy as np
 
 
 class ImageFeatureExtractor:
-	FEATURE_LABELS = ["Face Count", "Facial Brightness", "Facial Hue", "Relative Size of Facial Region",
-	                  "Facial Signal to Noise Ratio", "Eye Signal", "Contrast", "Sharpness"]
+
+
+
+	EYE_XML = os.path.join(os.path.dirname(__file__), 'xml', 'HAAR_EYE.xml')
+	FACE_XML = os.path.join(os.path.dirname(__file__), 'xml', 'HAAR_FACE.xml')
 	def __init__(self, imageFileName, facecascxml_path, eyecascxml_path):
 
 		self.feature_vector = []
@@ -43,8 +46,8 @@ class ImageFeatureExtractor:
 		facehc_xml = self.inputfacecascxml
 		eyehc_xml = self.inputeyecasxml
 		img = self.inputimagefile
-		face_cascade = cv2.CascadeClassifier(facehc_xml)
-		eye_cascade = cv2.CascadeClassifier(eyehc_xml)
+		face_cascade = cv2.CascadeClassifier(ImageFeatureExtractor.FACE_XML)
+		eye_cascade = cv2.CascadeClassifier(ImageFeatureExtractor.FACE_XML)
 		image = cv2.imread(img)
 		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -57,6 +60,7 @@ class ImageFeatureExtractor:
 		img_contrast = diff_contrast / sum_contrast
 
 		img_weight, img_height = gray.shape
+		print self.inputimagefile
 		faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 		face_num = len(faces)
 		img_face_ratio = 0.0
@@ -102,8 +106,8 @@ class ImageFeatureExtractor:
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if __name__ == '__main__':
 	testimage = '../data/training/ling/1/JapanVisit.JPG'
-	face_hcxml = './xml/haarcascade_frontalface_default.xml'
-	eye_hcxml = './xml//haarcascade_eye.xml'
+	face_hcxml = './xml/HAAR_FACE.xml'
+	eye_hcxml = './xml//HAAR_EYE.xml'
 	im_extractor = ImageFeatureExtractor(testimage, face_hcxml, eye_hcxml)
 	im_extractor.initialize()
 	im_extractor.extract()

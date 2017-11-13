@@ -44,6 +44,7 @@ class TrainingFileReader:
 			imageVector = ImageFeatureExtractor(trainingFile,
 			                                    './ImageFeatureExtractor/xml/HAAR_FACE.xml',
 			                                    './ImageFeatureExtractor/xml/HAAR_EYE.xml').extract()
+			print imageVector
 			imageVectorList.append(imageVector)
 			imageLabelList.append(label)
 		return imageVectorList, imageLabelList
