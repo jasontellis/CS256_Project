@@ -14,8 +14,7 @@ class ImageFeatureExtractor:
 
 
 
-	EYE_XML = os.path.join(os.path.dirname(__file__), 'xml', 'haarcascade_eye_tree_eyeglasses.xml')
-	FACE_XML = os.path.join(os.path.dirname(__file__), 'xml', 'HAAR_FACE.xml')
+
 	def __init__(self, imageFileName, facecascxml_path, eyecascxml_path):
 
 		self.feature_vector = []
@@ -24,6 +23,8 @@ class ImageFeatureExtractor:
 		self.inputimagefile = imageFileName
 		self.inputfacecascxml = os.path.abspath(facecascxml_path)
 		self.inputeyecasxml = os.path.abspath(eyecascxml_path)
+		self.EYE_XML = os.path.join(os.path.dirname(__file__), 'xml', 'haarcascade_eye_tree_eyeglasses.xml')
+		self.FACE_XML = os.path.join(os.path.dirname(__file__), 'xml', 'HAAR_FACE.xml')
 		
 
 	def initialize(self):
@@ -32,13 +33,14 @@ class ImageFeatureExtractor:
 			print("Input image file doesn't exist or it's not a file")
 		
 		if not os.path.isfile(self.inputfacecascxml):
-			print("Input face haarcascade xml doesn't exist or it's not a file, use default one")
-			self.inputeyecasxml = FACE_XML
+			#print("Input face haarcascade xml doesn't exist or it's not a file, use default one")
+			self.inputfacecascxml = self.FACE_XML
 		if not os.path.isfile(self.inputeyecasxml):
-			print("Input eye haarcascade xml doesn't exist or it's not a file. Use default one")
-			self.inputeyecasxml = EYE_XML
-		self.face_cascade = cv2.CascadeClassifier(ImageFeatureExtractor.FACE_XML)
-		self.eye_cascade = cv2.CascadeClassifier(ImageFeatureExtractor.EYE_XML)
+			#print("Input eye haarcascade xml doesn't exist or it's not a file. Use default one")
+			self.inputeyecasxml = self.EYE_XML
+
+		self.face_cascade = cv2.CascadeClassifier(self.inputfacecascxml)
+		self.eye_cascade = cv2.CascadeClassifier(self.inputeyecasxml)
 		self.image = cv2.imread(self.inputimagefile)
 
 	def extract(self):
@@ -94,7 +96,7 @@ class ImageFeatureExtractor:
 			for (x, y, w, h) in faces:
 				eye_signal_face = []
 				face_roi = img[y:y + h, x:x + w, :]
-				cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+				#cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
 				face_hsv = cv2.cvtColor(face_roi, cv2.COLOR_BGR2HSV)
 				face_lab=rgb2lab(face_roi)
 				#face_lab=cv2.cvtColor(face_roi, cv2.COLOR_RGB2LAB)
@@ -161,12 +163,13 @@ class ImageFeatureExtractor:
 
 		self.feature_vector = [face_num, img_skin_pr, img_skin_a, img_skin_b, img_face_sharpness,img_face_worstSNR,
 							   img_gray_ep,  img_sharpness]
+		print("face_SNR:"+repr(img_face_worstSNR))
 
 	
 		
 		return self.feature_vector
 	
-	def calEntroy(self, img, upper=240,lower=5, ROI_ratio=0.5):
+	def calEntroy(self, img, upper=240,lower=100, ROI_ratio=0.5):
 		w,h=img.shape
 		ROI_ratio = min(1, max(0.25, ROI_ratio))
 		width_radius=max(1,w*0.5*np.sqrt(ROI_ratio))
@@ -444,14 +447,14 @@ class ImageFeatureExtractor:
 if __name__ == '__main__':
 	#testimage = '../data/training/test/original.jpg'
 	#Ling
-	testimage = '../data/training/test/m.jpg'
+	testimage = '../data/training/test/party_foggy_dark.jpg'
 	face_hcxml = './xml/HAAR_FACE.xml'
 	#eye_hcxml = './xml//HAAR_EYE.xml'
 	eye_hcxml = './xml/haarcascade_eye_tree_eyeglasses.xml'
 	im_extractor = ImageFeatureExtractor(testimage, face_hcxml, eye_hcxml)
 	im_extractor.initialize()
 	im_extractor.extract()
-	good_feature_vector=[2, 0.5, 19, 20, 7,4,7.05,10]
+	good_feature_vector=[2, 0.5, 19, 20, 7,8 ,7.05,10]
 	im_extractor.enhance(ref_feature_vector=good_feature_vector)
 	'''
 	im_extractor.enhance_constrast_brightness()
