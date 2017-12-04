@@ -42,6 +42,7 @@ class ImageFeatureExtractor:
 		self.image = cv2.imread(self.inputimagefile)
 
 	def extract(self):
+		self.initialize()
 		face_hue = []
 		face_brightness = []
 		face_sharpness = []
@@ -62,8 +63,6 @@ class ImageFeatureExtractor:
 		img_skin_a = 0
 		img_skin_b = 0
 		img=self.image
-		
-
 		facehc_xml = self.inputfacecascxml
 		eyehc_xml = self.inputeyecasxml
 		gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -95,17 +94,27 @@ class ImageFeatureExtractor:
 			for (x, y, w, h) in faces:
 				eye_signal_face = []
 				face_roi = img[y:y + h, x:x + w, :]
-				#cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+				cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
 				face_hsv = cv2.cvtColor(face_roi, cv2.COLOR_BGR2HSV)
 				face_lab=rgb2lab(face_roi)
+				#face_lab=cv2.cvtColor(face_roi, cv2.COLOR_RGB2LAB)
 				face_lch=lab2lch(face_lab)
 				dim=face_lch.shape
-				face_central=face_lch[dim[0]/2-dim[0]/50:dim[0]/2+dim[0]/50,dim[1]/2-dim[1]/50:dim[1]/2+dim[1]/50,:]
+				c0_width=max(1,dim[0]/50)
+				c1_width=max(1,dim[1]/50)
+				
+				face_central_lch=face_lch[int(dim[0]/2-c0_width):int(dim[0]/2+c0_width),int(dim[1]/2-c1_width):int(dim[1]/2+c1_width),:]
 				#cv2.rectangle(face_roi,(dim[0]/2-dim[0]/50,dim[1]/2-dim[1]/50),(dim[0]/2-dim[0]/50+dim[0]/25,dim[1]/2-dim[1]/50+dim[1]/25),(0,255,0),2)	
-				face_central_lab=rgb2lab(face_central/256.0)
-				face_central_lch=lab2lch(face_central_lab)
+				face_central_lab=face_lab[dim[0]/2-c0_width:dim[0]/2+c0_width,dim[1]/2-c1_width:dim[1]/2+c1_width,:]
+				#face_central_lab=cv2.cvtColor(face_central, cv2.COLOR_RGB2LAB)
+				#face_central_lch=lab2lch(face_central_lab)
 				skin_L,skin_c,skin_h=np.mean(face_central_lch, axis=(0,1))
 				skin_L,skin_a,skin_b=np.mean(face_central_lab, axis=(0,1))
+				if len(face_central_lab)<1:
+					Ling
+				cv2.namedWindow("img",cv2.WINDOW_NORMAL)
+				cv2.imshow('img',img)
+				cv2.waitKey(1000)	
 				#face_pr=np.exp(-(float(np.power((avg_face_lch[0]-181),2))/(2*np.power(130,2)) + float(np.power((avg_face_lch[1]-32),2))/(2*np.power(11,2)) + float(np.power((avg_face_lch[2]-34),2))/(2*np.power(8,2))))
 				#face_pr=np.exp(-(float(np.power((avg_face_lch[1]-32),2))/(2*np.power(11,2)) + float(np.power((avg_face_lch[2]-34),2))/(2*np.power(8,2))))
 				img_skin_pr=np.exp(-(float(np.power((skin_c-32),2))/(2*np.power(11,2)) + float(np.power((skin_h-5),2))/(2*np.power(8,2))))
@@ -156,11 +165,9 @@ class ImageFeatureExtractor:
 
 		self.feature_vector = [face_num, img_skin_pr, img_skin_a, img_skin_b, img_face_sharpness,img_face_worstSNR,
 							   img_gray_ep,  img_sharpness]
-		'''
-		cv2.imshow('img',img)
-		#cv2.waitKey(0)
-		cv2.destroyAllWindows()
-		'''
+
+		#cv2.destroyAllWindows()
+		
 		return self.feature_vector
 	
 	def calEntroy(self, img_ROI, upper=250,lower=5):
@@ -219,7 +226,7 @@ class ImageFeatureExtractor:
 				#cv2.startWindowThread()
 				#cv2.namedWindow("Sharpened",cv2.WINDOW_NORMAL)
 				#cv2.imshow("Sharpened",self.image)
-				print ("current image sharpness:"+ repr(img_face_sharpness) +" < "+"reference image sharpness:" + ref_face_sharpness)
+				print ("current image sharpness:"+ repr(img_face_sharpness) +" < "+"reference image sharpness:" + repr(ref_face_sharpness))
 				print("image sharpening is performed due to blurred image")
 			#cv2.waitKey(10000)
 				
@@ -236,17 +243,17 @@ class ImageFeatureExtractor:
 			ref_face_color_pr=ref_feature_vector[1]
 			ref_face_skin_a=ref_feature_vector[2]
 			ref_face_skin_b=ref_feature_vector[3]
+			
 			if img_face_color_pr<ref_face_color_pr:
 				self.skin_color_correction(ref_face_skin_a, ref_face_skin_b)
 				bool_cc = True
-				print ("current face color accuracy:"+ repr(img_face_color_pr) +" < "+"reference face color accuracy:" + ref_face_color_pr)
+				print ("current face color accuracy:"+ repr(img_face_color_pr) +" < "+"reference face color accuracy:" + repr(ref_face_color_pr))
 				print("face color correction is performed due to inaccurate face skin tone color")
 			
 			if bool_entropy == True or bool_denoise == True or bool_sharpen == True or bool_cc == True:
 				cv2.startWindowThread()
 				cv2.namedWindow("Enhanced",cv2.WINDOW_NORMAL)
 				cv2.imshow("Enhanced",self.image)
-				cv2.waitKey(10000)
 				cv2.imwrite(enhanceimg_Name ,self.image)
 				if os.path.isfile(enhanceimg_Name):
 					print enhanceimg_Name, "is generated and saved"
@@ -278,7 +285,7 @@ class ImageFeatureExtractor:
 		img_enhanced = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
 		img_enhanced2= cv2.bilateralFilter(img_enhanced,9,10, 10)
 		gray_enhanced = cv2.cvtColor(img_enhanced2, cv2.COLOR_BGR2GRAY)
-		faces = self.face_cascade.detectMultiScale(gray_enhanced , 1.1, 5)
+		faces = self.face_cascade.detectMultiScale(gray_enhanced , 1.3, 5)
 		if len(faces)>0:
 			for (x,y,w, h) in faces:
 				face_roi_enhance = copy.deepcopy(img_enhanced2[y:y + h, x:x + w, :])
@@ -310,12 +317,14 @@ class ImageFeatureExtractor:
 		for (x, y, w, h) in faces:
 			face_roi = copy.deepcopy(img[y:y + h, x:x + w, :])
 			
-			face_lab=rgb2lab(face_roi/256.0)
+			face_lab=rgb2lab(face_roi)
 			#face_lab=
 			face_lch=lab2lch(face_lab)
 			face_pr=np.exp(-(np.power((face_lch[:,:,1]-32),2).astype(float))/(2*np.power(11,2) + np.power((face_lch[:,:,2]-5),2).astype(float)/(2*np.power(8,2))))
 			dim = face_pr.shape
-			face_central_pr= face_pr[dim[0]/2-dim[0]/50:dim[0]/2+dim[0]/50,dim[1]/2-dim[1]/50:dim[1]/2+dim[1]/50]
+			c0_width=max(1, float(dim[0])/50)
+			c1_width=max(1, float(dim[1])/50)
+			face_central_pr= face_pr[int(dim[0]/2-c0_width):int(dim[0]/2+c0_width),int(dim[1]/2-c1_width):int(dim[1]/2+c1_width)]
 			max_denoise_color_sigma=100*np.mean(face_central_pr, axis=(0,1))
 			denoise_spatial_sigma=100*np.mean(face_central_pr, axis=(0,1))
 			#max_denoise_color_sigma=5
@@ -394,27 +403,32 @@ class ImageFeatureExtractor:
 			#cv2.startWindowThread()
 			cv2.namedWindow("face_wrong_color", cv2.WINDOW_NORMAL)
 			cv2.imshow("face_wrong_color", face_roi)
-			face_lab=cv2.cvtColor(face_roi, cv2.COLOR_RGB2LAB)
-			#face_lab=rgb2lab(face_roi/256.0)
+			#face_lab=cv2.cvtColor(face_roi, cv2.COLOR_RGB2LAB)
+			face_lab=rgb2lab(face_roi)
 			face_lch=lab2lch(face_lab)
 			face_pr=np.exp(-(np.power((face_lch[:,:,1]-32),2).astype(float))/(2*np.power(11,2) + np.power((face_lch[:,:,2]-5),2).astype(float)/(2*np.power(8,2))))
-			a_diff = np.multiply((face_lab[:,:,1]-ref_a), face_pr)
-			b_diff = np.multiply((face_lab[:,:,2]-ref_b), face_pr)
+			a_diff = np.multiply((face_lab[:,:,1]-ref_a), face_pr*0.33)
+			b_diff = np.multiply((face_lab[:,:,2]-ref_b), face_pr*0.33)
 			face_lab[:,:,1] = face_lab[:,:,1] + a_diff
 			face_lab[:,:,2] = face_lab[:,:,2] + b_diff
-			#face_skin_corrected = lab2rgb(face_lab)
-			face_skin_corrected =cv2.cvtColor(face_lab, cv2.COLOR_LAB2RGB)
+			face_skin_corrected = lab2rgb(face_lab)
+			face_skin_corrected_new = (face_skin_corrected *256).astype(int).clip(0,255)
+			#face_skin_corrected =cv2.cvtColor(face_lab, cv2.COLOR_lab2rgb)
+			#Ling
 			cv2.namedWindow("Face_color_corrected",cv2.WINDOW_NORMAL)
 			cv2.imshow("Face_color_corrected", face_skin_corrected)
-			#cv2.waitKey(10000)
 			
-			img[y:y + h, x:x + w, :] = face_skin_corrected
+			cv2.waitKey(30000)
+			#Ling
+			
+			img[y:y + h, x:x + w, :] = face_skin_corrected_new
 			#cv2.namedWindow("Whole_Image",cv2.WINDOW_NORMAL)
 			#cv2.imshow("Whole_Image", img)
 			#cv2.waitKey(10000)
 			
 		self.image=img	
-			
+
+
 			
 			
 		
@@ -429,14 +443,15 @@ class ImageFeatureExtractor:
 if __name__ == '__main__':
 	#testimage = '../data/training/test/original.jpg'
 	#Ling
-	testimage = '../data/training/test/NoiseImage.jpg'
+	testimage = '../data/training/test/IMG_2236.jpg'
 	face_hcxml = './xml/HAAR_FACE.xml'
 	#eye_hcxml = './xml//HAAR_EYE.xml'
 	eye_hcxml = './xml/haarcascade_eye_tree_eyeglasses.xml'
 	im_extractor = ImageFeatureExtractor(testimage, face_hcxml, eye_hcxml)
 	im_extractor.initialize()
 	im_extractor.extract()
-	im_extractor.enhance()
+	good_feature_vector=[2, 0.5, 19, 20, 7,4,7.05,10]
+	im_extractor.enhance(ref_feature_vector=good_feature_vector)
 	'''
 	im_extractor.enhance_constrast_brightness()
 	im_extractor.face_sharpen()
