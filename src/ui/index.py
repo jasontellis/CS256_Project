@@ -2,6 +2,7 @@ from flask import Flask, url_for, request
 import os
 app = Flask(__name__)
 
+# 'display: ' \
 HTML_PREFIX = '<!DOCTYPE html>' \
               '<html lang="en">' \
               '<head>' \
@@ -12,11 +13,12 @@ HTML_PREFIX = '<!DOCTYPE html>' \
               '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> ' \
               '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>' \
               '<style>.' \
-              'imgContainer{' \
+              '.imgContainer{' \
               'height:40%%;' \
               'position:relative;' \
               'top:40px; ' \
-              'display:inline-block; ' \
+              'display:inline-block;t'\
+              'align-items: center;'\
               'text-align:center; ' \
               '}' \
               '' \
@@ -105,7 +107,37 @@ def __generateCarouselOuter__(fileList, carouselID):
 
 	return outputString
 
+def getDislikeButton():
+	buttonHTML = '<button class="btn-danger imgButtonDislike"' \
+	             'style ="position: absolute; top:60%%; right:10%%;">' \
+	             'Dislike' \
+	'<span style="font-size:1.5em;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>' \
+	'</button>'
+
+	return buttonHTML
+
+def getLikeButton():
+	buttonHTML = '<button class="btn-success imgButtonLike" ' \
+				 'style ="position: absolute; top:60%%; left:10%%">' \
+	             '<span style="font-size:1.5em;"' \
+	             'class="glyphicon glyphicon-ok" aria-hidden="true">' \
+	             '</span>' \
+	             'Like' \
+	             '</button>'
+
+	return buttonHTML
+
+def getImage(imageURL):
+
+	imageHTML = '<img class="img-rounded img-responsive" ' \
+	            'src=%s ' \
+	            'style="max-height: 750px;">'%imageURL
+	print imageHTML
+	return imageHTML
+
+
 def __generateCarouselInner__(fileList, username):
+
 	outputString = ''
 	prefix = '<div class="carousel-inner">'
 	suffix = '</div>'
@@ -115,25 +147,17 @@ def __generateCarouselInner__(fileList, username):
 	for file in fileList:
 		relPath = os.path.relpath(file[0])
 		imageURL = url_for('static', filename='images/%s/%s'%(username, file[1]))
-		print relPath
 		counter += 1
 		divClass = 'item'
 		if counter == 1:
 			divClass = activeClass
-		imageString = '<div class="%s imgContainer thumbnail" background-image=%s>' \
-		              '<button class="btn-success imgButtonLike" ' \
-		              'style ="position: absolute; top:40%%; left: 30%%;">' \
-		              '<span style="font-size:1.5em;" class="glyphicon glyphicon-ok" aria-hidden="true"></span>' \
-		              'Like' \
-		              '</button>' \
-		              '' \
-		              '<button class="btn-danger imgButtonDislike" style ="position: absolute; top:40%%; right: 30%%;">' \
-		              'Dislike  ' \
-		              '<span style="font-size:1.5em;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>' \
-		              '</button>' \
-		              '<img  class="img-rounded img-responsive" src=%s style="max-height: 750px;">' \
-		              '</div>'%(divClass, imageURL, imageURL)
-		outputString  += imageString
+
+		imageString = '<div class="%s imgContainer thumbnail">'%(divClass)\
+		              +'<div class="col-md-2">'+getLikeButton()+'</div>'\
+		              +'<div class="col-md-8">'+getImage(imageURL)+'</div>'\
+		              +'<div class="col-md-2">'+getDislikeButton()+'</div>'\
+		              +'</div>'
+		outputString += imageString
 
 	outputString = prefix + outputString + suffix
 
