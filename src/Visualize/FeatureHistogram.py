@@ -23,10 +23,16 @@ class FeatureHistogram:
 
 		data = pandas.DataFrame.from_records(imageVectorList,columns = Constants.FEATURE_LABELS )#, index = Constants.FEATURE_LABELS)
 		print data.describe()
-		data.plot(kind = 'hist', subplots = True, layout = (4, 2), sharex = False, sharey = False)
-		plt.show()
-
+		#ling
+		axs=data.plot(kind = 'hist', subplots = True, layout = (4, 2), sharex = False, sharey = False)
+		#ling
 
 if __name__ == "__main__":
-	imageVectorList, imageLabelList = TrainingFileReader.extractTrainingData("../data/training/ling/")
-	fh = FeatureHistogram(imageVectorList)
+	imageVectorList_good, imageLabelList_good = TrainingFileReader.extractTrainingData("../data/training/ling", False, 1)
+	fh_good = FeatureHistogram(imageVectorList_good)
+	#fig.suptitle('Good image', fontsize = 12)
+	#fig.savefig("../good_feature_histogram.png")
+	imageVectorList_bad, imageLabelList_bad = TrainingFileReader.extractTrainingData("../data/training/ling", False, 0)
+	fh_bad = FeatureHistogram(imageVectorList_bad)
+	#fig.suptitle('Bad image', fontsize = 12)
+	#fig.savefig('../bad_feature_histogram.png')
