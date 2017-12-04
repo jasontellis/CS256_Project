@@ -9,5 +9,5 @@ def getImages(id, token):
 
 if __name__ == '__main__':
 	id =    '10152457319305628'
-	token = 'EAACEdEose0cBAOnGqUXwDYxZAP9wazWoVK4yPDBdGZAyKr65SCnCV00tVijhJDM8nrB697ZCrkowshe8dE1J9oESR52ZBQ8Xo7AICaI2iSG8vrp4xIpodHCVkpEu87Mbt3bUbHOy9N4YOFrKTtlfcLirnbmbzZC0eQtDQxg5XbJkzUrIda0c2aMX8Ba8NW9gZD'
+	token = 'EAACEdEose0cBAPZACZBPFhHatkrZC4wkp4qDjTnQWAgrzJFLyDSy8mW4mJoiS783nMZAbNRFBKEhuUjObbtn4f3ugSRZCtX4hyv1TXhCBmqhuXxwV6vPB3lzIMVYOZBJQmCTjSpX4DZCz7Ob9Rc4iv4iNVpYgsixEaQlFZCler3R50PPkWvlkrxIuaJVxjZAi2hgZD'
 	getImages(id,token)
