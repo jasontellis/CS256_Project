@@ -30,13 +30,13 @@ class ImageFeatureExtractor:
 
 		if not os.path.isfile(self.inputimagefile):
 			print("Input image file doesn't exist or it's not a file")
-			sys.exit(2)
+		
 		if not os.path.isfile(self.inputfacecascxml):
-			print("Input face haarcascade xml doesn't exist or it's not a file")
-			sys.exit(2)
+			print("Input face haarcascade xml doesn't exist or it's not a file, use default one")
+			self.inputeyecasxml = FACE_XML
 		if not os.path.isfile(self.inputeyecasxml):
-			print("Input eye haarcascade xml doesn't exist or it's not a file")
-			sys.exit(2)
+			print("Input eye haarcascade xml doesn't exist or it's not a file. Use default one")
+			self.inputeyecasxml = EYE_XML
 		self.face_cascade = cv2.CascadeClassifier(ImageFeatureExtractor.FACE_XML)
 		self.eye_cascade = cv2.CascadeClassifier(ImageFeatureExtractor.EYE_XML)
 		self.image = cv2.imread(self.inputimagefile)
@@ -106,15 +106,14 @@ class ImageFeatureExtractor:
 				face_central_lch=face_lch[int(dim[0]/2-c0_width):int(dim[0]/2+c0_width),int(dim[1]/2-c1_width):int(dim[1]/2+c1_width),:]
 				#cv2.rectangle(face_roi,(dim[0]/2-dim[0]/50,dim[1]/2-dim[1]/50),(dim[0]/2-dim[0]/50+dim[0]/25,dim[1]/2-dim[1]/50+dim[1]/25),(0,255,0),2)	
 				face_central_lab=face_lab[dim[0]/2-c0_width:dim[0]/2+c0_width,dim[1]/2-c1_width:dim[1]/2+c1_width,:]
-				#face_central_lab=cv2.cvtColor(face_central, cv2.COLOR_RGB2LAB)
-				#face_central_lch=lab2lch(face_central_lab)
 				skin_L,skin_c,skin_h=np.mean(face_central_lch, axis=(0,1))
 				skin_L,skin_a,skin_b=np.mean(face_central_lab, axis=(0,1))
 				if len(face_central_lab)<1:
-					Ling
-				cv2.namedWindow("img",cv2.WINDOW_NORMAL)
-				cv2.imshow('img',img)
-				cv2.waitKey(1000)	
+					print("empty face detection, please double check. Program exits")
+					sys.exit(2)
+				#cv2.namedWindow("img",cv2.WINDOW_NORMAL)
+				#cv2.imshow('img',img)
+				#cv2.waitKey(1000)	
 				#face_pr=np.exp(-(float(np.power((avg_face_lch[0]-181),2))/(2*np.power(130,2)) + float(np.power((avg_face_lch[1]-32),2))/(2*np.power(11,2)) + float(np.power((avg_face_lch[2]-34),2))/(2*np.power(8,2))))
 				#face_pr=np.exp(-(float(np.power((avg_face_lch[1]-32),2))/(2*np.power(11,2)) + float(np.power((avg_face_lch[2]-34),2))/(2*np.power(8,2))))
 				img_skin_pr=np.exp(-(float(np.power((skin_c-32),2))/(2*np.power(11,2)) + float(np.power((skin_h-5),2))/(2*np.power(8,2))))
@@ -135,9 +134,6 @@ class ImageFeatureExtractor:
 				if len(eyes):
 					for (ex, ey, ew, eh) in eyes:
 						eye_signal_face.append(np.average(gray[ey:ey + eh, ex:ex + ew]))
-						#hue[ey:ey + eh, ex:ex + ew] = -1
-						#brightness[ey:ey + eh, ex:ex + ew] = -1
-						#img[ey:ey + eh, ex:ex + ew,:] = [-1,-1,-1]
 						#cv2.rectangle(img,(ex,ey),(ex+ew,ey+eh),(0,0,255),2)
 					eye_signal.append(np.average(eye_signal_face))
 					img_eye_signal = np.average(eye_signal)
@@ -166,11 +162,16 @@ class ImageFeatureExtractor:
 		self.feature_vector = [face_num, img_skin_pr, img_skin_a, img_skin_b, img_face_sharpness,img_face_worstSNR,
 							   img_gray_ep,  img_sharpness]
 
-		#cv2.destroyAllWindows()
+	
 		
 		return self.feature_vector
 	
-	def calEntroy(self, img_ROI, upper=250,lower=5):
+	def calEntroy(self, img, upper=240,lower=5, ROI_ratio=0.5):
+		w,h=img.shape
+		ROI_ratio = min(1, max(0.25, ROI_ratio))
+		width_radius=max(1,w*0.5*np.sqrt(ROI_ratio))
+		height_radius=max(1,h*0.5*np.sqrt(ROI_ratio))
+		img_ROI = img[int(w/2-width_radius):int(w/2+width_radius), int(h/2-height_radius):int(h/2+height_radius)]
 		gray_Test = np.ma.masked_outside(img_ROI, lower, upper).compressed()
 		gray_hist =np.histogram(gray_Test,bins=xrange(1,256))
 		gray_pd=gray_hist[0].astype(float)/len(gray_Test)
@@ -297,7 +298,7 @@ class ImageFeatureExtractor:
 			
 		cv2.namedWindow("contrast",cv2.WINDOW_NORMAL)
 		cv2.imshow("contrast",img_enhanced2)
-		cv2.waitKey(10000)
+		cv2.waitKey(5000)
 		
 		#img=self.image
 			
@@ -443,7 +444,7 @@ class ImageFeatureExtractor:
 if __name__ == '__main__':
 	#testimage = '../data/training/test/original.jpg'
 	#Ling
-	testimage = '../data/training/test/IMG_2236.jpg'
+	testimage = '../data/training/test/m.jpg'
 	face_hcxml = './xml/HAAR_FACE.xml'
 	#eye_hcxml = './xml//HAAR_EYE.xml'
 	eye_hcxml = './xml/haarcascade_eye_tree_eyeglasses.xml'
