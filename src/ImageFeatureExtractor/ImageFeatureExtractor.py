@@ -272,10 +272,10 @@ class ImageFeatureExtractor:
 				print("face color correction is performed due to inaccurate face skin tone color")
 			
 			if bool_entropy == True or bool_denoise == True or bool_sharpen == True or bool_cc == True:
-				cv2.startWindowThread()
-				cv2.namedWindow("Enhanced",cv2.WINDOW_NORMAL)
-				cv2.imshow("Enhanced",self.image)
-				cv2.imwrite(enhanceimg_Name ,self.image)
+				#cv2.startWindowThread()
+				#cv2.namedWindow("Enhanced",cv2.WINDOW_NORMAL)
+				#cv2.imshow("Enhanced",self.image)
+				#cv2.imwrite(enhanceimg_Name ,self.image)
 				if os.path.isfile(enhanceimg_Name):
 					print enhanceimg_Name, "is generated and saved"
 			else:
@@ -286,8 +286,8 @@ class ImageFeatureExtractor:
 		faces=self.face_ROI
 		img= self.image
 		ori_img= copy.deepcopy(img)
-		cv2.namedWindow("Original", cv2.WINDOW_NORMAL)
-		cv2.imshow("Original", ori_img)
+		#cv2.namedWindow("Original", cv2.WINDOW_NORMAL)
+		#cv2.imshow("Original", ori_img)
 		if len(faces)>0:
 			for (x,y,w, h) in faces:
 				face_roi = copy.deepcopy(img[y:y + h, x:x + w, :])
@@ -316,9 +316,9 @@ class ImageFeatureExtractor:
 				#cv2.imshow("face_highcontrast", face_roi_enhance)
 			self.face_ROI=faces
 			
-		cv2.namedWindow("contrast",cv2.WINDOW_NORMAL)
-		cv2.imshow("contrast",img_enhanced2)
-		cv2.waitKey(5000)
+		#cv2.namedWindow("contrast",cv2.WINDOW_NORMAL)
+		#cv2.imshow("contrast",img_enhanced2)
+		#cv2.waitKey(5000)
 		
 		#img=self.image
 			
@@ -351,9 +351,9 @@ class ImageFeatureExtractor:
 			#max_denoise_color_sigma=5
 			#denoise_spatial_sigma=10
 			face_smooth = cv2.bilateralFilter(face_roi,9,denoise_spatial_sigma, max_denoise_color_sigma)
-			cv2.startWindowThread()
-			cv2.namedWindow("face_smooth",cv2.WINDOW_NORMAL)
-			cv2.imshow("face_smooth", face_smooth)
+			#cv2.startWindowThread()
+			#cv2.namedWindow("face_smooth",cv2.WINDOW_NORMAL)
+			#cv2.imshow("face_smooth", face_smooth)
 	
 			img[y:y + h, x:x + w, :] = face_smooth
 
@@ -391,8 +391,8 @@ class ImageFeatureExtractor:
 			face_yuv[:,:,0]=custom
 			#face_roi_sharpen=(yuv2rgb(face_yuv))
 			face_roi_sharpen=cv2.cvtColor(face_yuv, cv2.COLOR_YUV2RGB)
-			cv2.namedWindow("Sharpen",cv2.WINDOW_NORMAL)
-			cv2.imshow("Sharpen", face_roi_sharpen)
+			#cv2.namedWindow("Sharpen",cv2.WINDOW_NORMAL)
+			#cv2.imshow("Sharpen", face_roi_sharpen)
 			#cv2.waitKey(10000)
 			img[y:y + h, x:x + w, :] = face_roi_sharpen
 		self.image=img
@@ -410,8 +410,8 @@ class ImageFeatureExtractor:
 		img_yuv[:,:,0]=custom
 		#face_roi_sharpen=(yuv2rgb(face_yuv))
 		img_sharpen=cv2.cvtColor(img_yuv, cv2.COLOR_YUV2RGB)
-		cv2.namedWindow("Sharpen",cv2.WINDOW_NORMAL)
-		cv2.imshow("Sharpen", img_sharpen)
+		#cv2.namedWindow("Sharpen",cv2.WINDOW_NORMAL)
+		#cv2.imshow("Sharpen", img_sharpen)
 		#cv2.waitKey(10000)
 		#img[y:y + h, x:x + w, :] = face_roi_sharpen
 		self.image=img_sharpen
@@ -422,8 +422,8 @@ class ImageFeatureExtractor:
 		for (x, y, w, h) in faces:
 			face_roi = copy.deepcopy(img[y:y + h, x:x + w, :])
 			#cv2.startWindowThread()
-			cv2.namedWindow("face_wrong_color", cv2.WINDOW_NORMAL)
-			cv2.imshow("face_wrong_color", face_roi)
+			#cv2.namedWindow("face_wrong_color", cv2.WINDOW_NORMAL)
+			#cv2.imshow("face_wrong_color", face_roi)
 			#face_lab=cv2.cvtColor(face_roi, cv2.COLOR_RGB2LAB)
 			face_lab=rgb2lab(face_roi)
 			face_lch=lab2lch(face_lab)
@@ -436,10 +436,10 @@ class ImageFeatureExtractor:
 			face_skin_corrected_new = (face_skin_corrected *256).astype(int).clip(0,255)
 			#face_skin_corrected =cv2.cvtColor(face_lab, cv2.COLOR_lab2rgb)
 			#Ling
-			cv2.namedWindow("Face_color_corrected",cv2.WINDOW_NORMAL)
-			cv2.imshow("Face_color_corrected", face_skin_corrected)
+			#cv2.namedWindow("Face_color_corrected",cv2.WINDOW_NORMAL)
+			#cv2.imshow("Face_color_corrected", face_skin_corrected)
 			
-			cv2.waitKey(30000)
+			#cv2.waitKey(30000)
 			#Ling
 			
 			img[y:y + h, x:x + w, :] = face_skin_corrected_new
