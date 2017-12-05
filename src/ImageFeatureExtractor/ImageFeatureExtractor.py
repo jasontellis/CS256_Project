@@ -15,7 +15,7 @@ class ImageFeatureExtractor:
 
 
 
-	def __init__(self, imageFileName, facecascxml_path, eyecascxml_path):
+	def __init__(self, imageFileName, facecascxml_path="", eyecascxml_path=""):
 
 		self.feature_vector = []
 		self.face_ROI=[]
@@ -71,7 +71,7 @@ class ImageFeatureExtractor:
 		self.imggray=gray
 		img_gray_ep=self.calEntroy(gray)
 		
-		print "image entropy:", img_gray_ep
+		#print "image entropy:", img_gray_ep
 		
 
 		gray_laplacian = cv2.Laplacian(gray, cv2.CV_64F)
@@ -83,7 +83,7 @@ class ImageFeatureExtractor:
 		img_contrast = diff_contrast / sum_contrast
 
 		img_weight, img_height = gray.shape
-		print self.inputimagefile
+		#print self.inputimagefile
 		faces = self.face_cascade.detectMultiScale(gray, 1.3, 5)
 		
 		face_num = len(faces)
@@ -163,7 +163,7 @@ class ImageFeatureExtractor:
 
 		self.feature_vector = [face_num, img_skin_pr, img_skin_a, img_skin_b, img_face_sharpness,img_face_worstSNR,
 							   img_gray_ep,  img_sharpness]
-		print("face_SNR:"+repr(img_face_worstSNR))
+		#print("face_SNR:"+repr(img_face_worstSNR))
 		
 		return self.feature_vector
 	
@@ -179,24 +179,26 @@ class ImageFeatureExtractor:
 		img_gray_ep=-np.sum(np.multiply(gray_pd,np.ma.log2(gray_pd).data))
 		y = gray_pd
 		bins = xrange(1, len(y)+1)
+		'''
 		l = plt.plot(bins, y, 'r--', linewidth=1)
 		plt.xlabel('graylevel')
 		plt.ylabel('Probability')
 		plt.title(r'image PDF ')
 		plt.axis([1, 256, 0, max(y)])
 		plt.grid(True)
+		'''
 		cur_feature_vector = self.feature_vector
 		basePath = os.path.dirname(__file__)
-		print "current path of current file:", basePath
+		#print "current path of current file:", basePath
 		parentPath = os.path.abspath(os.path.join(basePath,".."))
-		print "parent path of current file:",parentPath
+		#print "parent path of current file:",parentPath
 		entropyHist_Dir = os.path.abspath(os.path.join(parentPath , 'data', 'entropy_hist'))
-		print entropyHist_Dir
+		#print entropyHist_Dir
 		if not os.path.exists(entropyHist_Dir):
 			os.mkdir(entropyHist_Dir)
 		entropyHistimg_Name = "".join([entropyHist_Dir,self.inputimagefile.split('/')[-1].split('.')[0]
 									   + '{:-%Y-%m-%d_%H-%M-%S}'.format(datetime.datetime.now())+'.png'])
-		plt.savefig(entropyHistimg_Name)
+		#plt.savefig(entropyHistimg_Name)
 		return img_gray_ep
 
 	def enhance(self, ref_feature_vector=[2, 0.5, 19, 20, 7,4,7.05,10], enhance = True):
