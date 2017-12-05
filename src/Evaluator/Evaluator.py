@@ -8,7 +8,7 @@ import itertools
 
 class Evaluator:
 
-	def __init__(self, trainingDirectory=os.path.abspath('../data/training/ling'), evaluationDirectory=os.path.abspath('../data/enhance')):
+	def __init__(self, trainingDirectory=os.path.abspath('../data/training/'), evaluationDirectory=os.path.abspath('../data/enhance')):
 		self.evaluationDirectory = evaluationDirectory
 		self.trainingDirectory = trainingDirectory
 		print self.evaluationDirectory, self.trainingDirectory
@@ -44,7 +44,7 @@ class Evaluator:
 			panel.pack(side = "top")
 			b1 = Button(root, text = "Like", command = lambda: likeDislikeCallback(1, imageFilename, root, self))
 			b1.pack()
-			b2 = Button(root, text = 'Dislike', command = lambda: likeDislikeCallback(1, imageFilename, root, self))
+			b2 = Button(root, text = 'Dislike', command = lambda: likeDislikeCallback(0, imageFilename, root, self))
 			b2.pack()
 			root.mainloop()
 		return self.userLabels
@@ -60,11 +60,13 @@ class Evaluator:
 		if len(agentLabelList) == 0 or  len(userLabelList) == 0:
 			print "Zero labels"
 			sys.exit(2)
-
+		print agentLabelList, userLabelList
 		for agentLabel, userLabel in itertools.izip(agentLabelList, userLabelList):
 			currScore = 0
+			userLabel = str(userLabel)
 			counter += 1
 			if agentLabel == '0' and userLabel == '0':
+
 				currScore = -1
 			elif agentLabel == '0' and userLabel == '1':
 				currScore = 2
@@ -73,7 +75,7 @@ class Evaluator:
 			elif agentLabel == '1' and userLabel == '1':
 				currScore = 0
 			score += currScore
-		score /= counter
+		score /= (2*counter)
 		return score
 
 
@@ -97,14 +99,14 @@ class Evaluator:
 
 
 def likeDislikeCallback(choice, imageFile, tkRoot, evaluator):
-	LIKE = 1
-	DISLIKE = 0
+	LIKE = '1'
+	DISLIKE = '0'
 	tkRoot.destroy()
 	if choice == LIKE:
 		evaluator.moveImageToTraining(imageFile)
 	else:
 		print 'Dislike'
-	evaluator.userLabels.append[choice]
+	evaluator.userLabels.append(choice)
 
 if __name__ == '__main__':
-	Evaluator().getUserEvaluation()
+	print Evaluator().calculateScore(['0','0','1','1'],['0','0','1','1'])

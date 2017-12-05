@@ -26,8 +26,9 @@ class Main:
 		               SVMTrainer(None)]
 		'''			   
 		classifiers = [SVMTrainer(None)]
-		testingDirectory = Main.pickDirectory('Select Training directory')
-		trainingDirectory = Main.pickDirectory('Select Test Directory')
+		trainingDirectory = Main.pickDirectory('Select Training directory')
+		testingDirectory = Main.pickDirectory('Select Test directory')
+
 		print 'Reading training images...'
 		imageVectorList, imageLabelList, imgTrainFileList= TrainingFileReader.extractTrainingData(trainingDirectory)
 		print 'Reading test images...'
@@ -78,18 +79,18 @@ class Main:
 			predictedLabel  = '1'
 			if t_predictions[i] == "0":
 				imgbad= ImageFeatureExtractor(imgTestFileList[i])
-				enhanceDir = imgbad.enhancedDirectory
 				# imgbad.initialize()
 				imgbad.extract()
 				#good_feature_vector=[2, 0.5, 19, 20, 7,8 ,7.05,10]
 				agentFile = imgbad.enhance(ref_feature_vector)
+				enhanceDir = os.path.dirname(agentFile)
 				predictedLabel = '0'
 			else:
 				basePath = os.path.dirname(__file__)
 				train_good_path=os.path.abspath(os.path.join(basePath,"data","training","1"))
 			agentFileList.append(agentFile)
 			agentLabels.append(predictedLabel)
-
+		print 'Training', trainingDirectory
 		evaluator = Evaluator(trainingDirectory, enhanceDir)
 		userLabels = evaluator.getUserEvaluation(agentFileList)
 		print Evaluator.calculateScore(agentLabels,userLabels)
