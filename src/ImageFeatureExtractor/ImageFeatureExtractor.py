@@ -164,12 +164,10 @@ class ImageFeatureExtractor:
 		self.feature_vector = [face_num, img_skin_pr, img_skin_a, img_skin_b, img_face_sharpness,img_face_worstSNR,
 							   img_gray_ep,  img_sharpness]
 		print("face_SNR:"+repr(img_face_worstSNR))
-
-	
 		
 		return self.feature_vector
 	
-	def calEntroy(self, img, upper=240,lower=100, ROI_ratio=0.5):
+	def calEntroy(self, img, upper=240,lower=150, ROI_ratio=0.5):
 		w,h=img.shape
 		ROI_ratio = min(1, max(0.25, ROI_ratio))
 		width_radius=max(1,w*0.5*np.sqrt(ROI_ratio))
@@ -187,7 +185,18 @@ class ImageFeatureExtractor:
 		plt.title(r'image PDF ')
 		plt.axis([1, 256, 0, max(y)])
 		plt.grid(True)
-		#plt.show()
+		cur_feature_vector = self.feature_vector
+		basePath = os.path.dirname(__file__)
+		print "current path of current file:", basePath
+		parentPath = os.path.abspath(os.path.join(basePath,".."))
+		print "parent path of current file:",parentPath
+		entropyHist_Dir = os.path.abspath(os.path.join(parentPath , 'data', 'entropy_hist'))
+		print entropyHist_Dir
+		if not os.path.exists(entropyHist_Dir):
+			os.mkdir(entropyHist_Dir)
+		entropyHistimg_Name = "".join([entropyHist_Dir,self.inputimagefile.split('/')[-1].split('.')[0]
+									   + '{:-%Y-%m-%d_%H-%M-%S}'.format(datetime.datetime.now())+'.png'])
+		plt.savefig(entropyHistimg_Name)
 		return img_gray_ep
 
 	def enhance(self, ref_feature_vector=[2, 0.5, 19, 20, 7,4,7.05,10], enhance = True):
@@ -197,7 +206,12 @@ class ImageFeatureExtractor:
 		bool_cc = False
 		
 		cur_feature_vector = self.feature_vector
-		enhanceimg_Dir="../data/enhance/"
+		basePath = os.path.dirname(__file__)
+		#print 'Base', basePath
+		enhanceimg_Dir = os.path.abspath(os.path.join('..',basePath , 'data', 'enhance'))
+		#print ehDir
+		
+		#enhanceimg_Dir="../data/enhance/"
 		if not os.path.exists(enhanceimg_Dir):
 			os.mkdir(enhanceimg_Dir)
 		enhanceimg_Name = "".join([enhanceimg_Dir,self.inputimagefile.split('/')[-1].split('.')[0] + '{:-%Y-%m-%d_%H-%M-%S}'.format(datetime.datetime.now())+'.jpg'])
@@ -447,7 +461,7 @@ class ImageFeatureExtractor:
 if __name__ == '__main__':
 	#testimage = '../data/training/test/original.jpg'
 	#Ling
-	testimage = '../data/training/test/party_foggy_dark.jpg'
+	testimage = '../data/training/test/boating.jpg'
 	face_hcxml = './xml/HAAR_FACE.xml'
 	#eye_hcxml = './xml//HAAR_EYE.xml'
 	eye_hcxml = './xml/haarcascade_eye_tree_eyeglasses.xml'
