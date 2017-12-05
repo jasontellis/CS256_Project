@@ -6,7 +6,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 class AbstractTrainer:
 	"""
-	Takes list of image vectors & associated labels as input & returns
+	Takes list of imageFile vectors & associated labels as input & returns
 	trained model as output
 	"""
 

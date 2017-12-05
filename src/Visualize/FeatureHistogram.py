@@ -62,9 +62,9 @@ class FeatureHistogram:
 if __name__ == "__main__":
 	imageVectorList_good, imageLabelList_good = TrainingFileReader.extractTrainingData("../data/training/ling", False, 1)
 	fh_good = FeatureHistogram(imageVectorList_good, title = 'Feature Distribution for Good Images')
-	#fig.suptitle('Good image', fontsize = 12)
+	#fig.suptitle('Good imageFile', fontsize = 12)
 	# fig.savefig("../good_feature_histogram.png")
 	imageVectorList_bad, imageLabelList_bad = TrainingFileReader.extractTrainingData("../data/training/ling", False, 0)
 	fh_bad = FeatureHistogram(imageVectorList_bad, title = 'Feature Distribution for Bad Images')
-	# #fig.suptitle('Bad image', fontsize = 12)
+	# #fig.suptitle('Bad imageFile', fontsize = 12)
 	# fig.savefig('../bad_feature_histogram.png')

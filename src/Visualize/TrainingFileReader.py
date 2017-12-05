@@ -14,7 +14,7 @@ class TrainingFileReader:
 		Returns list of images in a training directory with associated label
 
 		:param directory: File Path
-		:return: Returns a list of image filenames keyed by label in a directory
+		:return: Returns a list of imageFile filenames keyed by label in a directory
 		"""
 		labelledFileList = []
 		if all==True:
@@ -42,7 +42,7 @@ class TrainingFileReader:
 	@staticmethod
 	def extractTrainingData(directory, boolAll = True, select = 1):
 		"""
-		Returns a list of image vectors and list of associated labels
+		Returns a list of imageFile vectors and list of associated labels
 		:return:
 		"""
 		imageVectorList = []

@@ -6,7 +6,7 @@ Adapted from https://www.daniweb.com/programming/software-development/code/46884
 from itertools import cycle
 import Tkinter as tk
 class App(tk.Tk):
-    '''Tk window/label adjusts to size of image'''
+    '''Tk window/label adjusts to size of imageFile'''
     def __init__(self, image_files, x, y, delay):
         # the root will be self
         tk.Tk.__init__(self)
@@ -24,8 +24,8 @@ class App(tk.Tk):
         # next works with Python26 or higher
         img_object, img_name = next(self.pictures)
         self.picture_display.config(image=img_object)
-        # shows the image filename, but could be expanded
-        # to show an associated description of the image
+        # shows the imageFile filename, but could be expanded
+        # to show an associated description of the imageFile
         self.title(img_name)
         self.after(self.delay, self.show_slides)
     def run(self):

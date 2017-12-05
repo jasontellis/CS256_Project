@@ -4,6 +4,7 @@ from PIL import Image,ImageTk
 import os,os.path
 import shutil
 import datetime, time
+import itertools
 
 class Evaluator:
 
@@ -11,6 +12,7 @@ class Evaluator:
 		self.evaluationDirectory = evaluationDirectory
 		self.trainingDirectory = trainingDirectory
 		print self.evaluationDirectory, self.trainingDirectory
+		self.userLabels = []
 
 	def __getFilesToBeDisplayed__(self):
 		'''
@@ -26,25 +28,54 @@ class Evaluator:
 		return fileList
 
 
-	def showImages(self):
+	def getUserEvaluation(self, filesToBeEvaluated):
 		'''
 
 		:return: Show images in training directory
 		'''
 
-		imageFileList = self.__getFilesToBeDisplayed__()
-		for imageFile in imageFileList:
+		# imageFileList = self.__getFilesToBeDisplayed__()
+		for imageFilename in filesToBeEvaluated:
 			root = Tk()
-			resizedImage = Image.open(imageFile)
+			resizedImage = Image.open(imageFilename)
 			resizedImage = resizedImage.resize((500, 500), Image.ANTIALIAS)  # The (250, 250) is (height, width)
 			tkinterImg = ImageTk.PhotoImage(resizedImage)
 			panel = tk.Label(root, image = tkinterImg)
 			panel.pack(side = "top")
-			b1 = Button(root, text = "Like", command = lambda: likeDislikeCallback(1, imageFile, root, self))
+			b1 = Button(root, text = "Like", command = lambda: likeDislikeCallback(1, imageFilename, root, self))
 			b1.pack()
-			b2 = Button(root, text = 'Dislike', command = lambda: likeDislikeCallback(1, imageFile, root, self))
+			b2 = Button(root, text = 'Dislike', command = lambda: likeDislikeCallback(1, imageFilename, root, self))
 			b2.pack()
 			root.mainloop()
+		return self.userLabels
+
+	@staticmethod
+	def calculateScore(agentLabelList, userLabelList):
+		score = 0.0
+		counter = 0
+
+		if len(agentLabelList) != len(userLabelList):
+			print "Count mismatch for classifier and agent labels"
+			sys.exit(2)
+		if len(agentLabelList) == 0 or  len(userLabelList) == 0:
+			print "Zero labels"
+			sys.exit(2)
+
+		for agentLabel, userLabel in itertools.izip(agentLabelList, userLabelList):
+			currScore = 0
+			counter += 1
+			if agentLabel == '0' and userLabel == '0':
+				currScore = -1
+			elif agentLabel == '0' and userLabel == '1':
+				currScore = 2
+			elif agentLabel == '1' and userLabel == '0':
+				currScore = -2
+			elif agentLabel == '1' and userLabel == '1':
+				currScore = 0
+			score += currScore
+		score /= counter
+		return score
+
 
 	@staticmethod
 	def resizeImage(imageFile):
@@ -73,7 +104,7 @@ def likeDislikeCallback(choice, imageFile, tkRoot, evaluator):
 		evaluator.moveImageToTraining(imageFile)
 	else:
 		print 'Dislike'
-
+	evaluator.userLabels.append[choice]
 
 if __name__ == '__main__':
-	Evaluator().showImages()
+	Evaluator().getUserEvaluation()

@@ -129,7 +129,7 @@ def getLikeButton():
 
 def getImage(imageURL):
 
-	imageHTML = '<img class="img-rounded img-responsive" ' \
+	imageHTML = '<tkinterImg class="tkinterImg-rounded tkinterImg-responsive" ' \
 	            'src=%s ' \
 	            'style="max-height: 750px;">'%imageURL
 	print imageHTML
