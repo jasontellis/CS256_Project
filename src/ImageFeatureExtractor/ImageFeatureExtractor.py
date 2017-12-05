@@ -196,7 +196,7 @@ class ImageFeatureExtractor:
 		#print entropyHist_Dir
 		if not os.path.exists(entropyHist_Dir):
 			os.mkdir(entropyHist_Dir)
-		entropyHistimg_Name = "".join([entropyHist_Dir,self.inputimagefile.split('/')[-1].split('.')[0]
+		entropyHistimg_Name = "".join([entropyHist_Dir,"/",self.inputimagefile.split('/')[-1].split('.')[0]
 									   + '{:-%Y-%m-%d_%H-%M-%S}'.format(datetime.datetime.now())+'.png'])
 		#plt.savefig(entropyHistimg_Name)
 		return img_gray_ep
@@ -210,13 +210,14 @@ class ImageFeatureExtractor:
 		cur_feature_vector = self.feature_vector
 		basePath = os.path.dirname(__file__)
 		#print 'Base', basePath
-		enhanceimg_Dir = os.path.abspath(os.path.join('..',basePath , 'data', 'enhance'))
+		parentPath = os.path.abspath(os.path.join(basePath,".."))
+		enhanceimg_Dir = os.path.abspath(os.path.join(parentPath , 'data', 'enhance'))
 		#print ehDir
 		
 		#enhanceimg_Dir="../data/enhance/"
 		if not os.path.exists(enhanceimg_Dir):
 			os.mkdir(enhanceimg_Dir)
-		enhanceimg_Name = "".join([enhanceimg_Dir,self.inputimagefile.split('/')[-1].split('.')[0] + '{:-%Y-%m-%d_%H-%M-%S}'.format(datetime.datetime.now())+'.jpg'])
+		enhanceimg_Name = "".join([enhanceimg_Dir,"/",self.inputimagefile.split('/')[-1].split('.')[0] + '{:-%Y-%m-%d_%H-%M-%S}'.format(datetime.datetime.now())+'.jpg'])
 		img_global_entropy=cur_feature_vector[-2]
 		ref_global_entropy=ref_feature_vector[-2]
 		if img_global_entropy<ref_global_entropy:
@@ -463,7 +464,7 @@ class ImageFeatureExtractor:
 if __name__ == '__main__':
 	#testimage = '../data/training/test/original.jpg'
 	#Ling
-	testimage = '../data/training/test/boating.jpg'
+	testimage = '../data/test_1st/0/IMG_2193.jpg'
 	face_hcxml = './xml/HAAR_FACE.xml'
 	#eye_hcxml = './xml//HAAR_EYE.xml'
 	eye_hcxml = './xml/haarcascade_eye_tree_eyeglasses.xml'
