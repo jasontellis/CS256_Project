@@ -80,6 +80,9 @@ class Main:
 		root.destroy()
 		return directory
 
+	@staticmethod
+	def pickImageToEnhance():
+		filePickTitle = "Pick image for enhancement"
 
 if __name__ == "__main__":
 	Main()
