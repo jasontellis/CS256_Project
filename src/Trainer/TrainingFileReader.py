@@ -46,6 +46,7 @@ class TrainingFileReader:
 		"""
 		imageVectorList = []
 		imageLabelList = []
+		imageFileList =[]
 		trainingFiles = TrainingFileReader.__getFileList__(directory,boolAll,select)
 		for (trainingFile, label) in trainingFiles:
 			imageVector = ImageFeatureExtractor(trainingFile,
@@ -53,7 +54,8 @@ class TrainingFileReader:
 			                                    './ImageFeatureExtractor/xml/HAAR_EYE.xml').extract()
 			imageVectorList.append(imageVector)
 			imageLabelList.append(label)
-		return imageVectorList, imageLabelList, trainingFile
+			imageFileList.append(trainingFile)
+		return imageVectorList, imageLabelList, imageFileList
 
 
 if __name__ == '__main__':
