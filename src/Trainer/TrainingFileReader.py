@@ -53,7 +53,7 @@ class TrainingFileReader:
 			                                    './ImageFeatureExtractor/xml/HAAR_EYE.xml').extract()
 			imageVectorList.append(imageVector)
 			imageLabelList.append(label)
-		return imageVectorList, imageLabelList
+		return imageVectorList, imageLabelList, trainingFile
 
 
 if __name__ == '__main__':
