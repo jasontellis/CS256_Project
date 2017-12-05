@@ -2,7 +2,10 @@ import os
 import sys
 
 
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+import pylab
 import pandas
 
 print sys.path
@@ -22,8 +25,8 @@ class FeatureHistogram:
 		subPlotRows = len(colLabels) / subPlotColumns + len(colLabels) % subPlotColumns
 
 		dataFrame = pandas.DataFrame.from_records(imageVectorList,columns = Constants.FEATURE_LABELS )#, index = Constants.FEATURE_LABELS)
-
-		print 'Model: ',dataFrame.describe()
+		print 'Displaying ', title
+		# print 'Model: ',dataFrame.describe()
 		rowCount, colCount = dataFrame.shape
 
 
@@ -38,16 +41,22 @@ class FeatureHistogram:
 		                      layout = (4, 2),
 		                      sharex = False,
 		                      sharey = False,
+		                      bins = 4,
+		                      cumulative = False,
+		                      alpha = 0.5,
 		                      title = title)
 
 		for colIndex in range(colCount):
 			col = dataFrame.iloc[:, colIndex]
-			xmin = min(col)
-			xmax = max(col)
-			print colIndex/2, colIndex%2
+			print colIndex, col
+			xmin = int(min(col))
+			xmax = int(max(col))
 			axis = axes[colIndex/2][colIndex%2]
 			axis.set_xlim(xmin,xmax)
-			axis.set_ylim(ymin,ymax)
+			axis.set_xticks(range(xmin, xmax, 2))
+			# axis.set_ylim(ymin,ymax)
+
+		pylab.show()
 
 
 if __name__ == "__main__":

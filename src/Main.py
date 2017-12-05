@@ -52,8 +52,12 @@ class Main:
 			# show an "Open" dialog box and return the path to the selected file
 		directory = askdirectory(initialdir = "/",
 			                    title = dirPickTitle)
+		root.destroy()
 		return directory
 
+	@staticmethod
+	def pickImageToEnhance():
+		filePickTitle = "Pick image for enhancement"
 
 if __name__ == "__main__":
 	Main()
