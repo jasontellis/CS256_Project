@@ -125,7 +125,7 @@ class Evaluator:
 		fileName = os.path.basename(imageFile)
 		destinationFilename = Evaluator.getTimestamp()+fileName
 		destination = os.path.join(self.trainingDirectory, '1',destinationFilename)
-		print 'Moved %s to %s'%(imageFile, destination)
+		# print 'Moved %s to %s'%(imageFile, destination)
 		shutil.copy(imageFile,destination)
 
 	@staticmethod

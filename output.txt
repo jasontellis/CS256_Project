@@ -1,5 +1,5 @@
 Select training directory...
-2017-12-07 04:30:05.103 Python[24746:1033732] Ignoring request from Finder Sync Extension to register for file://localhost/Users/jasontellis/Library/Mobile%20Documents/com~apple~CloudDocs/
+2017-12-07 04:47:02.925 Python[24867:1041242] Ignoring request from Finder Sync Extension to register for file://localhost/Users/jasontellis/Library/Mobile%20Documents/com~apple~CloudDocs/
 Reading training images...
 Select directory with images to process:
 Reading images to process...
@@ -8,75 +8,61 @@ Cross Validating
 Testing
 Confusion Matrix for Cross Validation KNN Classifier
 	Good	Bad
-Good 51		3
-Bad  22		18
+Good 57		5
+Bad  21		19
 
-Accuracy of KNN Classifier: 0.7335
+Accuracy of KNN Classifier: 0.7441
 ***********************************************************
 Confusion Matrix for Test Image for KNN Classifier
 	Good	Bad
-Good 24		1
+Good 5		0
 Bad  2		4
-Classification Accuracy for Testing:0.9032
+Classification Accuracy for Testing:0.8182
 Building Model
 Cross Validating
 Testing
 Confusion Matrix for Cross Validation Support Vector Machine Classifier
 	Good	Bad
-Good 40		14
-Bad  12		28
+Good 51		11
+Bad  13		27
 
-Accuracy of Support Vector Machine Classifier: 0.7221
+Accuracy of Support Vector Machine Classifier: 0.7634
 ***********************************************************
 Confusion Matrix for Test Image for Support Vector Machine Classifier
 	Good	Bad
-Good 24		1
+Good 4		1
 Bad  3		3
-Classification Accuracy for Testing:0.8710
+Classification Accuracy for Testing:0.6364
 Building Model
 Cross Validating
 Testing
 Confusion Matrix for Cross Validation Random Forest Classifier
 	Good	Bad
-Good 39		15
-Bad  11		29
+Good 51		11
+Bad  9		31
 
-Accuracy of Random Forest Classifier: 0.7224
+Accuracy of Random Forest Classifier: 0.7925
 ***********************************************************
 Confusion Matrix for Test Image for Random Forest Classifier
 	Good	Bad
-Good 19		6
+Good 4		1
 Bad  4		2
-Classification Accuracy for Testing:0.6774
-Reference Feature Vector: [  2.66         0.61879834   4.80022236 -22.83999572   7.15818025
-   5.26919906   6.16176011   8.30893532]
-No face detected in this bad image so enhancement would focus on non-face feature such as contrast and brightness
-No face detected in this bad image so enhancement would focus on non-face feature such as contrast and brightness
-No face detected in this bad image so enhancement would focus on non-face feature such as contrast and brightness
-Current image sharpness:5.5461870747702164 < reference image sharpness:7.1581802518799131
-Image sharpening is performed due to blurred image
-No face detected in this bad image so enhancement would focus on non-face feature such as contrast and brightness
-Current face color accuracy:0.33715168719317523 < reference face color accuracy:0.61879833631828995
+Classification Accuracy for Testing:0.5455
+Reference Feature Vector: [  2.46666667   0.55876972   3.91032356 -21.26316916   6.47398374
+   4.42785935   6.16017526   8.48426337]
+Current face color accuracy:0.33715168719317523 < reference face color accuracy:0.55876972175595851
 Face color correction is performed due to inaccurate face skin tone color
 No face detected in this bad image so enhancement would focus on non-face feature such as contrast and brightness
 No face detected in this bad image so enhancement would focus on non-face feature such as contrast and brightness
 Agent Statistics: 
-Total Images:31 
-Classified Good:23 
-Classified Bad:8
+Total Images:11 
+Classified Good:8 
+Classified Bad:3
 Evaluate processed images
-Moved /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/test_1st/1/20171207032148Party2.jpg to /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/training/1/2017120704404120171207032148Party2.jpg
-Moved /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/test_1st/1/20171207032835Party2.jpg to /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/training/1/2017120704404620171207032835Party2.jpg
-Moved /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/test_1st/1/20171207032840JasonBadnopeople-2017-12-07_03-28-26.jpg to /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/training/1/2017120704404920171207032840JasonBadnopeople-2017-12-07_03-28-26.jpg
-Moved /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/enhance/20171207041223Napping in park 9-2017-12-07_04-11-35-2017-12-07_04-39-48.jpg to /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/training/1/2017120704405020171207041223Napping in park 9-2017-12-07_04-11-35-2017-12-07_04-39-48.jpg
-Moved /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/test_1st/1/20171207041229JasonBadnopeople-2017-12-07_04-11-36.jpg to /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/training/1/2017120704405920171207041229JasonBadnopeople-2017-12-07_04-11-36.jpg
-Moved /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/test_1st/1/20171207041540JasonBad9.jpg to /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/training/1/2017120704411320171207041540JasonBad9.jpg
-Moved /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/test_1st/1/20171207041543JasonBadnopeople-2017-12-07_04-14-27.jpg to /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/training/1/2017120704411520171207041543JasonBadnopeople-2017-12-07_04-14-27.jpg
-Moved /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/test_1st/0/jasonFriendbad.jpg to /Users/jasontellis/Google Drive/cs256/CS256_Project/CS256_Project/src/data/training/1/20171207044127jasonFriendbad.jpg
 Confusion Matrix for User Evaluation vs Classifier Evaluation
 				Predicted Good	Predicted Bad
-User-labelled Good 	0		16
-User-labelled Bad  	8		7
-Accuracy of Agent :0.2258
-Score: -0.5968
+User-labelled Good 	0		6
+User-labelled Bad  	4		1
+Accuracy of Agent :0.0909
+Score: -0.4091
 Do you wish to continue? y: Yes, any other key to exit: 
