@@ -5,6 +5,7 @@ import os,os.path
 import shutil
 import datetime, time
 import itertools
+import functools
 
 class Evaluator:
 
@@ -38,17 +39,40 @@ class Evaluator:
 		for imageFilename in filesToBeEvaluated:
 			root = Tk()
 			resizedImage = Image.open(imageFilename)
+			resizedImage = Evaluator.image_transpose_exif(resizedImage)
 			resizedImage = resizedImage.resize((500, 500), Image.ANTIALIAS)  # The (250, 250) is (height, width)
 			tkinterImg = ImageTk.PhotoImage(resizedImage)
 			panel = tk.Label(root, image = tkinterImg)
 			panel.pack(side = "top")
-			b1 = Button(root, text = "Like", command = lambda: likeDislikeCallback(1, imageFilename, root, self))
+			b1 = Button(root, text = "Like", command = lambda: likeDislikeCallback("1", imageFilename, root, self))
 			b1.pack()
-			b2 = Button(root, text = 'Dislike', command = lambda: likeDislikeCallback(0, imageFilename, root, self))
+			b2 = Button(root, text = 'Dislike', command = lambda: likeDislikeCallback("0", imageFilename, root, self))
 			b2.pack()
 			root.mainloop()
 		return self.userLabels
+	
+	@staticmethod
+	def image_transpose_exif(im):
+		exif_orientation_tag = 0x0112 # contains an integer, 1 through 8
+		exif_transpose_sequences = [  # corresponding to the following
+			[],
+			[Image.FLIP_LEFT_RIGHT],
+			[Image.ROTATE_180],
+			[Image.FLIP_TOP_BOTTOM],
+			[Image.FLIP_LEFT_RIGHT, Image.ROTATE_90],
+			[Image.ROTATE_270],
+			[Image.FLIP_TOP_BOTTOM, Image.ROTATE_90],
+			[Image.ROTATE_90],
+		]
 
+		try:
+			seq = exif_transpose_sequences[im._getexif()[exif_orientation_tag] - 1]
+		except Exception:
+			return im
+		else:
+			return functools.reduce(lambda im, op: im.transpose(op), seq, im)
+	
+	
 	@staticmethod
 	def calculateScore(agentLabelList, userLabelList):
 		score = 0.0
