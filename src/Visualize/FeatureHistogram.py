@@ -7,10 +7,8 @@ matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import pylab
 import pandas
-
-print sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
-print sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'+os.sep)))
+print sys.path[-1]
 from Constants import Constants
 from TrainingFileReader  import TrainingFileReader
 print Constants.CLASS_LABELS
@@ -60,11 +58,11 @@ class FeatureHistogram:
 
 
 if __name__ == "__main__":
-	imageVectorList_good, imageLabelList_good = TrainingFileReader.extractTrainingData("../data/training/ling", False, 1)
+	imageVectorList_good, imageLabelList_good = TrainingFileReader.extractTrainingData("../data/training", False, 1)
 	fh_good = FeatureHistogram(imageVectorList_good, title = 'Feature Distribution for Good Images')
 	#fig.suptitle('Good imageFile', fontsize = 12)
 	# fig.savefig("../good_feature_histogram.png")
-	imageVectorList_bad, imageLabelList_bad = TrainingFileReader.extractTrainingData("../data/training/ling", False, 0)
+	imageVectorList_bad, imageLabelList_bad = TrainingFileReader.extractTrainingData("../data/training/", False, 0)
 	fh_bad = FeatureHistogram(imageVectorList_bad, title = 'Feature Distribution for Bad Images')
 	# #fig.suptitle('Bad imageFile', fontsize = 12)
 	# fig.savefig('../bad_feature_histogram.png')
