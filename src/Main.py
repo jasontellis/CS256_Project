@@ -25,7 +25,8 @@ class Main:
 		               RandomForestTrainer(10),
 		               SVMTrainer(None)]
 		'''			   
-		classifiers = [SVMTrainer(None)]
+		# classifiers = [SVMTrainer(None)]
+		classifiers = [RandomForestTrainer(10)]
 		trainingDirectory = Main.pickDirectory('Select Training directory')
 		testingDirectory = Main.pickDirectory('Select Test directory')
 
@@ -33,6 +34,10 @@ class Main:
 		imageVectorList, imageLabelList, imgTrainFileList= TrainingFileReader.extractTrainingData(trainingDirectory)
 		print 'Reading test images...'
 		imageTestList, imageTestLabelList, imgTestFileList= TrainingFileReader.extractTrainingData(testingDirectory)
+
+		isContinue = 'n'
+		while isContinue.lower() != 'y':
+			isContinue = raw_input("Do you wish to continue?")
 
 		t_predictions = []
 		for classifier in classifiers:
@@ -48,7 +53,7 @@ class Main:
 			print ("\tGood\tBad")
 			print("Good %i\t\t%i" %(tp, fn))
 			print("Bad  %i\t\t%i" % (fp, tn))
-			print ("Classification Accuracy for training:%.4f" %(float(tp+tn)/(tp+fn+fp+tn)))
+			# print ("Classification Accuracy for training:%.4f" %(float(tp+tn)/(tp+fn+fp+tn)))
 			CrossValidator(classifier, imageVectorList, imageLabelList).printAccuracy()
 			
 			print ("Confusion Matrix for Test Image for %s" %classifier.name)
