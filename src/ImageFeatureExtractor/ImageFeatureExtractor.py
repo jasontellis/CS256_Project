@@ -8,23 +8,24 @@ import datetime
 import cv2
 from skimage.color import rgb2lab, lab2lch, lab2rgb, rgb2yuv, yuv2rgb
 import numpy as np
-
-
 class ImageFeatureExtractor:
-
-
-
+	'''
+	Extracts feature Vector from given Image
+	'''
 
 	def __init__(self, imageFileName, facecascxml_path="", eyecascxml_path=""):
-
+		face_hcxml = './xml/HAAR_FACE.xml'
+		# eye_hcxml = './xml//HAAR_EYE.xml'
+		eye_hcxml = './xml/haarcascade_eye_tree_eyeglasses.xml'
+		self.EYE_XML = os.path.abspath(os.path.join(os.path.dirname(__file__), 'xml', 'haarcascade_eye_tree_eyeglasses.xml'))
+		self.FACE_XML = os.path.abspath(os.path.join(os.path.dirname(__file__), 'xml', 'HAAR_FACE.xml'))
 		self.feature_vector = []
 		self.face_ROI=[]
 		self.image = None
 		self.inputimagefile = imageFileName
 		self.inputfacecascxml = os.path.abspath(facecascxml_path)
 		self.inputeyecasxml = os.path.abspath(eyecascxml_path)
-		self.EYE_XML = os.path.join(os.path.dirname(__file__), 'xml', 'haarcascade_eye_tree_eyeglasses.xml')
-		self.FACE_XML = os.path.join(os.path.dirname(__file__), 'xml', 'HAAR_FACE.xml')
+
 		self.enhancedDirectory = ''
 		self.initialize()
 
