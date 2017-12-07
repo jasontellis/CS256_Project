@@ -20,99 +20,93 @@ class Main:
 		imageVectorList = []
 		imageLabelList = []
 		imageRefVectorList=[]
-		'''
-		classifiers = [KNNTrainer(9),
-		               RandomForestTrainer(10),
-		               SVMTrainer(None)]
-		'''			   
-		# classifiers = [SVMTrainer(None)]
-		classifiers = [RandomForestTrainer(10)]
-		trainingDirectory = Main.pickDirectory('Select Training directory')
-		testingDirectory = Main.pickDirectory('Select Test directory')
 
+		classifiers = [KNNTrainer(9),
+		               SVMTrainer(None),
+		               RandomForestTrainer(10),
+		               ]
+		testingDirectory = []
+		print 'Select training directory...'
+		trainingDirectory = Main.pickDirectory('Select Training directory')
 		print 'Reading training images...'
 		imageVectorList, imageLabelList, imgTrainFileList= TrainingFileReader.extractTrainingData(trainingDirectory)
-		print 'Reading test images...'
-		imageTestList, imageTestLabelList, imgTestFileList= TrainingFileReader.extractTrainingData(testingDirectory)
 
-		isContinue = 'n'
-		while isContinue.lower() != 'y':
-			isContinue = raw_input("Do you wish to continue?")
 
-		t_predictions = []
-		for classifier in classifiers:
-			print 'Building Model'
-			classifier.buildModel(imageVectorList, imageLabelList)
-			print 'Cross Validating'
-			predictions = CrossValidator(classifier, imageVectorList, imageLabelList).getPredictions()
-			tn, fp, fn, tp = confusion_matrix(imageLabelList, predictions).ravel()
-			print 'Testing'
-			t_predictions= classifier.model.predict(imageTestList)
-			tn1, fp1, fn1, tp1 = confusion_matrix(imageTestLabelList, t_predictions).ravel()
-			print ("Confusion Matrix for Cross Validation %s" %classifier.name)
-			print ("\tGood\tBad")
-			print("Good %i\t\t%i" %(tp, fn))
-			print("Bad  %i\t\t%i" % (fp, tn))
-			# print ("Classification Accuracy for training:%.4f" %(float(tp+tn)/(tp+fn+fp+tn)))
-			CrossValidator(classifier, imageVectorList, imageLabelList).printAccuracy()
-			
-			print ("Confusion Matrix for Test Image for %s" %classifier.name)
-			print ("\tGood\tBad")
-			print("Good %i\t\t%i" %(tp1, fn1))
-			print("Bad  %i\t\t%i" % (fp1, tn1))
-			print ("Classification Accuracy for Testing:%.4f" %(float(tp1+tn1)/(tp1+fn1+fp1+tn1)))
-		
-		for i in range(len(imageVectorList)):
-			if predictions[i] == "1":
-				imageRefVectorList.append(imageVectorList[i])
-		
-		ref_feature_vector = np.mean(np.asarray(imageRefVectorList)	, axis=0)	
-		
-		if len(ref_feature_vector)!=8:
-			print("invalid feature vector")
-			sys.exit(2)
+		isContinue = 'y'
+		while isContinue.lower() == 'y':
 
-		if len(t_predictions) != len(imgTestFileList):
-			print("ummatch predictions and test images number")
-			sys.exit(2)
+			print 'Select directory with images to process:'
+			testingDirectory = Main.pickDirectory('Select directory with images to process')
+			print 'Reading images to process...'
+			imageTestList, imageTestLabelList, imgTestFileList = TrainingFileReader.extractTrainingData(
+				testingDirectory)
+			t_predictions = []
+			for classifier in classifiers:
+				print 'Building Model'
+				classifier.buildModel(imageVectorList, imageLabelList)
+				print 'Cross Validating'
+				predictions = CrossValidator(classifier, imageVectorList, imageLabelList).getPredictions()
+				tn, fp, fn, tp = confusion_matrix(imageLabelList, predictions).ravel()
+				print 'Testing'
+				t_predictions= classifier.model.predict(imageTestList)
+				tn1, fp1, fn1, tp1 = confusion_matrix(imageTestLabelList, t_predictions).ravel()
+				print ("Confusion Matrix for Cross Validation %s" %classifier.name)
+				print ("\tGood\tBad")
+				print("Good %i\t\t%i" %(tp, fn))
+				print("Bad  %i\t\t%i" % (fp, tn))
+				# print ("Classification Accuracy for training:%.4f" %(float(tp+tn)/(tp+fn+fp+tn)))
+				CrossValidator(classifier, imageVectorList, imageLabelList).printAccuracy()
 
-		agentFileList = []
-		agentLabels = []
-		enhanceDir = trainingDirectory
-		for i in range(len(t_predictions)):
-			agentFile = imgTestFileList[i]
-			predictedLabel  = '1'
-			if t_predictions[i] == "0":
-				imgbad= ImageFeatureExtractor(imgTestFileList[i])
-				# imgbad.initialize()
-				imgbad.extract()
-				#good_feature_vector=[2, 0.5, 19, 20, 7,8 ,7.05,10]
-				agentFile = imgbad.enhance(ref_feature_vector)
-				enhanceDir = os.path.dirname(agentFile)
-				predictedLabel = '0'
-			else:
-				basePath = os.path.dirname(__file__)
-				train_good_path=os.path.abspath(os.path.join(basePath,"data","training","1"))
-			agentFileList.append(agentFile)
-			agentLabels.append(predictedLabel)
-		print 'Training', trainingDirectory
-		evaluator = Evaluator(trainingDirectory, enhanceDir)
-		userLabels = evaluator.getUserEvaluation(agentFileList)
-		print Evaluator.calculateScore(agentLabels,userLabels)
+				print ("Confusion Matrix for Test Image for %s" %classifier.name)
+				print ("\tGood\tBad")
+				print("Good %i\t\t%i" %(tp1, fn1))
+				print("Bad  %i\t\t%i" % (fp1, tn1))
+				print ("Classification Accuracy for Testing:%.4f" %(float(tp1+tn1)/(tp1+fn1+fp1+tn1)))
 
-	# @staticmethod
-	# def crossValidate(classifier, imageVectorList, imageLabelList):
-	# 	#Cross-Validate
-	# 	predictions = CrossValidator(classifier, imageVectorList, imageLabelList).getPredictions()
-	# 	return predictions
-	#
-	# @staticmethod
-	# def test(classifier, imageVectorList, imageLabelList):
-	# 	pass
-	#
-	# @staticmethod
-	# def printPredictions(title,labelList, predictions):
-	# 	pass
+			for i in range(len(imageVectorList)):
+				if predictions[i] == "1":
+					imageRefVectorList.append(imageVectorList[i])
+
+			ref_feature_vector = np.mean(np.asarray(imageRefVectorList)	, axis=0)
+			print 'Reference Feature Vector:',ref_feature_vector
+
+			if len(ref_feature_vector)!=8:
+				print("Invalid feature vector")
+				sys.exit(2)
+
+			if len(t_predictions) != len(imgTestFileList):
+				print("Mismatch between count of predictions and test images")
+				sys.exit(2)
+
+			outputFileList = []
+			agentLabels = []
+			enhancedImageDirectory = trainingDirectory
+			countOfClassifiedBad =  0
+			for i in range(len(t_predictions)):
+				outputFile = imgTestFileList[i]
+				predictedLabel  = t_predictions[i]
+				if predictedLabel == "0":
+					countOfClassifiedBad += 1
+					imgbad = ImageFeatureExtractor(imgTestFileList[i])
+					imgbad.extract()
+					#good_feature_vector=[2, 0.5, 19, 20, 7,8 ,7.05,10]
+					outputFile = imgbad.enhance(ref_feature_vector)
+					enhancedImageDirectory = os.path.dirname(outputFile)
+				else:
+					basePath = os.path.dirname(__file__)
+					train_good_path = os.path.abspath(os.path.join(basePath,"data","training","1"))
+				outputFileList.append(outputFile)
+				agentLabels.append(predictedLabel)
+			evaluator = Evaluator(trainingDirectory, enhancedImageDirectory)
+			print 'Agent Statistics: \nTotal Images:%i \nClassified Good:%i \nClassified Bad:%i' % (
+			len(t_predictions), len(t_predictions) - countOfClassifiedBad, countOfClassifiedBad)
+			print 'Evaluate processed images'
+			userLabels = evaluator.getUserEvaluation(outputFileList)
+
+			print 'Score: %.4f'%Evaluator.calculateScore(agentLabels,userLabels)
+			isContinue = raw_input("Do you wish to continue? y: Yes, any other key to exit: ")
+
+
 	@staticmethod
 	def pickDirectory(title=''):
 
