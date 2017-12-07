@@ -1,0 +1,30 @@
+objc[54544]: Class FIFinderSyncExtensionHost is implemented in both /System/Library/PrivateFrameworks/FinderKit.framework/Versions/A/FinderKit (0x7fffaf4ada70) and /System/Library/PrivateFrameworks/FileProvider.framework/OverrideBundles/FinderSyncCollaborationFileProviderOverride.bundle/Contents/MacOS/FinderSyncCollaborationFileProviderOverride (0x11aeafcd8). One of the two will be used. Which one is undefined.
+/Users/lingouyang/Documents/CS256/CS256_Project/src/data/training/ling
+Traceback (most recent call last):
+  File "/Users/lingouyang/Documents/CS256/CS256_Project/src/Main.py", line 59, in <module>
+    Main()
+  File "/Users/lingouyang/Documents/CS256/CS256_Project/src/Main.py", line 28, in __init__
+    imageVectorList, imageLabelList = TrainingFileReader.extractTrainingData(trainingDirectory)
+  File "/Users/lingouyang/Documents/CS256/CS256_Project/src/Trainer/TrainingFileReader.py", line 53, in extractTrainingData
+    './ImageFeatureExtractor/xml/HAAR_EYE.xml').extract()
+  File "/Users/lingouyang/Documents/CS256/CS256_Project/src/ImageFeatureExtractor/ImageFeatureExtractor.py", line 72, in extract
+    img_gray_ep=self.calEntroy(gray)
+  File "/Users/lingouyang/Documents/CS256/CS256_Project/src/ImageFeatureExtractor/ImageFeatureExtractor.py", line 189, in calEntroy
+    Ling
+NameError: global name 'Ling' is not defined
+os.getcwd()
+'/Users/lingouyang/Documents/CS256/CS256_Project/src'
+os.mkdir("../data/Entropy_dir")
+Traceback (most recent call last):
+  File "<console>", line 0, in <module>
+OSError: [Errno 2] No such file or directory: '../data/Entropy_dir'
+os.mkdir("../data/Entropy_dir/")
+Traceback (most recent call last):
+  File "<console>", line 0, in <module>
+OSError: [Errno 2] No such file or directory: '../data/Entropy_dir/'
+os.getcwd()
+'/Users/lingouyang/Documents/CS256/CS256_Project/src'
+ls
+Traceback (most recent call last):
+  File "<console>", line 0, in <module>
+NameError: name 'ls' is not defined
