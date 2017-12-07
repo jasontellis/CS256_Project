@@ -2,7 +2,7 @@ import os
 import sys
 import copy
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'+os.sep)))
-from ImageFeatureExtractor.ImageFeatureExtractor import ImageFeatureExtractor
+from ImageFeatureExtractor import ImageFeatureExtractor
 # from PIL import Image, ImageStat
 # import matplotlib.mlab as mlab
 # import matplotlib.pyplot as plt
@@ -250,11 +250,11 @@ class ImageEnhancer:
 """                                                                              """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if __name__ == '__main__':
-	testimage = '../data/training/0/m.jpg'
+	testimage = '../data/training/0/007.JPG'
 	good_feature_vector=[2, 0.5, 19, 20, 7, 8 ,7.05,10]
 	origin_feature_vector=[1, 0.105, 3.0985, -8.0890, 7.335, 2.599, 6.119, 6.625]
 	#Ling
-	imageEnhancer= ImageEnhancer(testimage, origin_feature_vector, good_feature_vector)
+	imageEnhancer = ImageEnhancer(testimage, origin_feature_vector, good_feature_vector)
 	
 	enhanced = imageEnhancer.enhance(ref_feature_vector=good_feature_vector)
 	from PIL import Image

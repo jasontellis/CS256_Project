@@ -9,6 +9,7 @@ from Validators.CrossValidator import CrossValidator
 from Tkinter import Tk
 from tkFileDialog import askopenfilename, askdirectory
 from ImageFeatureExtractor.ImageFeatureExtractor import ImageFeatureExtractor
+from ImageEnhancer import ImageEnhancer
 import numpy as np
 import sys
 import os
@@ -21,7 +22,7 @@ class Main:
 		imageLabelList = []
 		imageRefVectorList=[]
 
-		classifiers = [KNNTrainer(9),
+		classifiers = [KNNTrainer(5),
 		               SVMTrainer(None),
 		               RandomForestTrainer(10),
 		               ]
@@ -87,8 +88,7 @@ class Main:
 				predictedLabel  = t_predictions[i]
 				if predictedLabel == "0":
 					countOfClassifiedBad += 1
-					imgbad = ImageFeatureExtractor(imgTestFileList[i])
-					imgbad.extract()
+					imgbad = ImageEnhancer(imgTestFileList[i])
 					#good_feature_vector=[2, 0.5, 19, 20, 7,8 ,7.05,10]
 					outputFile = imgbad.enhance(ref_feature_vector)
 					enhancedImageDirectory = os.path.dirname(outputFile)

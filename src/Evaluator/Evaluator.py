@@ -1,18 +1,22 @@
+import sys
+import os,os.path
+rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'+os.sep))
+sys.path.append(rootPath) #Used for importing local packages
+from Utility import  Utility
 import Tkinter as tk
 from Tkinter import *
 from PIL import Image,ImageTk
-import os,os.path
 import shutil
 import datetime, time
 import itertools
 import functools
 
+
 class Evaluator:
 
-	def __init__(self, trainingDirectory=os.path.abspath('../data/training/'), evaluationDirectory=os.path.abspath('../data/enhance')):
+	def __init__(self, trainingDirectory=os.path.abspath('..'+os.sep+'data'+os.sep+'training'+os.sep), evaluationDirectory=os.path.abspath('..'+os.sep+'data'+os.sep+'enhance')):
 		self.evaluationDirectory = evaluationDirectory
 		self.trainingDirectory = trainingDirectory
-		print self.evaluationDirectory, self.trainingDirectory
 		self.userLabels = []
 
 	def __getFilesToBeDisplayed__(self):
@@ -36,6 +40,7 @@ class Evaluator:
 		'''
 
 		# imageFileList = self.__getFilesToBeDisplayed__()
+		self.userLabels = []
 		for imageFilename in filesToBeEvaluated:
 			root = Tk()
 			resizedImage = Image.open(imageFilename)
@@ -77,29 +82,36 @@ class Evaluator:
 	def calculateScore(agentLabelList, userLabelList):
 		score = 0.0
 		counter = 0
-
+		tn, tp, fn, fp = 0,0,0,0,
 		if len(agentLabelList) != len(userLabelList):
 			print "Count mismatch for classifier and agent labels"
 			sys.exit(2)
 		if len(agentLabelList) == 0 or  len(userLabelList) == 0:
 			print "Zero labels"
 			sys.exit(2)
-		print agentLabelList, userLabelList
 		for agentLabel, userLabel in itertools.izip(agentLabelList, userLabelList):
 			currScore = 0
 			userLabel = str(userLabel)
 			counter += 1
-			if agentLabel == '0' and userLabel == '0':
-
+			if agentLabel == '0' and userLabel == '0':#Penalize a agent classified bad image that is still bad after enhancement
 				currScore = -1
-			elif agentLabel == '0' and userLabel == '1':
+				tn += 1
+			elif agentLabel == '0' and userLabel == '1':#Reinforce a bad image that is good after enhancement
 				currScore = 2
-			elif agentLabel == '1' and userLabel == '0':
+				fp += 1
+			elif agentLabel == '1' and userLabel == '0':#Penalize a classifier tagged 'good' image that is labelled bad after enhancement
 				currScore = -2
-			elif agentLabel == '1' and userLabel == '1':
+				fn += 1
+			elif agentLabel == '1' and userLabel == '1':#Reinforce a good image that was not anhanced and is still considered good by user
 				currScore = 0
+				fp += 1
 			score += currScore
-		score /= (2*counter)
+		score /= (2*counter) #Normalize Score
+		print 'Confusion Matrix for User Evaluation vs Classifier Evaluation'
+		print ("\tPredicted Good\tPredicted Bad")
+		print("User-labelled Good %i\t\t%i" % (tp, fn ))
+		print("User-labelled Bad  %i\t\t%i" % (fp, tn))
+		print ("Accuracy of Agent :%.4f" % (float(tp + tn) / (tp + fn + fp + tn)))
 		return score
 
 
@@ -128,8 +140,6 @@ def likeDislikeCallback(choice, imageFile, tkRoot, evaluator):
 	tkRoot.destroy()
 	if choice == LIKE:
 		evaluator.moveImageToTraining(imageFile)
-	else:
-		print 'Dislike'
 	evaluator.userLabels.append(choice)
 
 if __name__ == '__main__':
