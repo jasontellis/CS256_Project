@@ -1,6 +1,7 @@
 import os
 import sys
 import copy
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'+os.sep)))
 # from PIL import Image, ImageStat
 # import matplotlib.mlab as mlab
 # import matplotlib.pyplot as plt
@@ -166,7 +167,7 @@ class ImageFeatureExtractor:
 		self.feature_vector = [face_num, img_skin_pr, img_skin_a, img_skin_b, img_face_sharpness,img_face_worstSNR,
 							   img_gray_ep,  img_sharpness]
 		#print("face_SNR:"+repr(img_face_worstSNR))
-		
+		print "current image feature:", self.feature_vector
 		return self.feature_vector
 	
 	def calEntroy(self, img, upper=240,lower=150, ROI_ratio=0.5):
@@ -473,13 +474,13 @@ class ImageFeatureExtractor:
 if __name__ == '__main__':
 	#testimage = '../data/training/test/original.jpg'
 	#Ling
-	testimage = os.path.abspath('../data/training/0/IMG_0312.JPG')
+	testimage = os.path.abspath('../data/training/0/m.JPG')
 	face_hcxml = './xml/HAAR_FACE.xml'
 	#eye_hcxml = './xml//HAAR_EYE.xml'
 	eye_hcxml = './xml/haarcascade_eye_tree_eyeglasses.xml'
 	im_extractor = ImageFeatureExtractor(testimage, face_hcxml, eye_hcxml)
 	# im_extractor.initialize()
-	im_extractor.extract()
+	img_feature=im_extractor.extract()
 	good_feature_vector=[2, 0.5, 19, 20, 7,8 ,7.05,10]
 	enhanced = im_extractor.enhance(ref_feature_vector=good_feature_vector)
 	from PIL import Image
