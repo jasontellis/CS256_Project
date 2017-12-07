@@ -61,12 +61,12 @@ class ImageEnhancer:
 			#cv2.imshow("Contrasted",self.image)
 
 		if cur_feature_vector[0]<1:
-			print("no face detected in this bad image so enhancement would focus on non-face feature such as contrast and brightness")
+			print("No face detected in this bad image so enhancement would focus on non-face feature such as contrast and brightness")
 			#if os.path.isfile(enhanceimg_Name):
-			print enhancedImageFileName, "is generated and saved"
+			# print enhancedImageFileName, "is generated and saved"
 			cv2.imwrite(enhancedImageFileName ,self.image)
 			#else:
-			print "Enhaced images is saved as", enhancedImageFileName
+			# print "Enhaced images is saved as", enhancedImageFileName
 		else:
 			img_face_sharpness=cur_feature_vector[4]
 			ref_face_sharpness=ref_feature_vector[4]
@@ -77,8 +77,8 @@ class ImageEnhancer:
 				#cv2.startWindowThread()
 				#cv2.namedWindow("Sharpened",cv2.WINDOW_NORMAL)
 				#cv2.imshow("Sharpened",self.image)
-				print ("current image sharpness:"+ repr(img_face_sharpness) +" < "+"reference image sharpness:" + repr(ref_face_sharpness))
-				print("image sharpening is performed due to blurred image")
+				print ("Current image sharpness:"+ repr(img_face_sharpness) +" < "+"reference image sharpness:" + repr(ref_face_sharpness))
+				print("Image sharpening is performed due to blurred image")
 			#cv2.waitKey(10000)
 
 			img_face_worstSNR=cur_feature_vector[5]
@@ -98,8 +98,8 @@ class ImageEnhancer:
 			if img_face_color_pr<ref_face_color_pr:
 				self.skin_color_correction(ref_face_skin_a, ref_face_skin_b)
 				bool_cc = True
-				print ("current face color accuracy:"+ repr(img_face_color_pr) +" < "+"reference face color accuracy:" + repr(ref_face_color_pr))
-				print("face color correction is performed due to inaccurate face skin tone color")
+				print ("Current face color accuracy:"+ repr(img_face_color_pr) +" < "+"reference face color accuracy:" + repr(ref_face_color_pr))
+				print("Face color correction is performed due to inaccurate face skin tone color")
 
 			if bool_entropy == True or bool_denoise == True or bool_sharpen == True or bool_cc == True:
 				#cv2.startWindowThread()
@@ -107,7 +107,8 @@ class ImageEnhancer:
 				#cv2.imshow("Enhanced",self.image)
 				cv2.imwrite(enhancedImageFileName ,self.image)
 				if os.path.isfile(enhancedImageFileName):
-					print enhancedImageFileName, "is generated and saved"
+					pass
+					# print enhancedImageFileName, "is generated and saved"
 			else:
 				print "No need to perform image enhancement on this image, please try another one"
 

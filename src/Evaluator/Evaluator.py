@@ -108,9 +108,9 @@ class Evaluator:
 			score += currScore
 		score /= (2*counter) #Normalize Score
 		print 'Confusion Matrix for User Evaluation vs Classifier Evaluation'
-		print ("\tPredicted Good\tPredicted Bad")
-		print("User-labelled Good %i\t\t%i" % (tp, fn ))
-		print("User-labelled Bad  %i\t\t%i" % (fp, tn))
+		print ("\t\t\t\tPredicted Good\tPredicted Bad")
+		print("User-labelled Good \t%i\t\t%i" % (tp, fn ))
+		print("User-labelled Bad  \t%i\t\t%i" % (fp, tn))
 		print ("Accuracy of Agent :%.4f" % (float(tp + tn) / (tp + fn + fp + tn)))
 		return score
 

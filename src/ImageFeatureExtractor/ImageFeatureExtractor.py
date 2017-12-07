@@ -115,7 +115,7 @@ class ImageFeatureExtractor:
 				skin_L,skin_c,skin_h=np.mean(face_central_lch, axis=(0,1))
 				skin_L,skin_a,skin_b=np.mean(face_central_lab, axis=(0,1))
 				if len(face_central_lab)<1:
-					print("empty face detection, please double check. Program exits")
+					# print("Empty face detection, please double check. Program exits")
 					sys.exit(2)
 				#cv2.namedWindow("img",cv2.WINDOW_NORMAL)
 				#cv2.imshow('img',img)
@@ -168,7 +168,7 @@ class ImageFeatureExtractor:
 		self.feature_vector = [face_num, img_skin_pr, img_skin_a, img_skin_b, img_face_sharpness,img_face_worstSNR,
 							   img_gray_ep,  img_sharpness]
 		#print("face_SNR:"+repr(img_face_worstSNR))
-		print "current image feature:", self.feature_vector
+		# print "current image feature:", self.feature_vector
 		return self.feature_vector
 	
 	def calEntroy(self, img, upper=240,lower=150, ROI_ratio=0.5):
